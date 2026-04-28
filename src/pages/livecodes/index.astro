@@ -1,0 +1,231 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import { liveBonusCodes } from '~/data/casinos';
+
+function timeAgo(min: number) {
+  if (min < 60) return `${min}m`;
+  return `${Math.floor(min / 60)}h ${min % 60}m`;
+}
+function timeLeft(h: number) {
+  if (h < 24) return `${h}h left`;
+  return `${Math.floor(h / 24)}d ${h % 24}h left`;
+}
+
+const typeColor: Record<string, string> = {
+  'no-deposit': 'badge-pink',
+  reload: 'badge-blue',
+  signup: 'badge-warning',
+  race: 'badge',
+  'free-spins': 'badge-success',
+};
+---
+
+<BaseLayout routeKey="liveCodes">
+  <PageHero
+    eyebrow="Live feed"
+    title="Bonus codes, refreshed every minute"
+    subtitle="Every code is hand-verified by FairLedger editors and pulled the moment it expires. Filter by casino, value or type."
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="lc-toolbar">
+        <div class="filter-tabs">
+          <button class="filter-tab active">All ({liveBonusCodes.length})</button>
+          <button class="filter-tab">No deposit</button>
+          <button class="filter-tab">Reload</button>
+          <button class="filter-tab">Signup</button>
+          <button class="filter-tab">Race</button>
+          <button class="filter-tab">Free spins</button>
+        </div>
+        <div class="lc-meta">
+          <span class="dot dot-pulse"></span>
+          Live - last update 23s ago
+        </div>
+      </div>
+
+      <div class="lc-grid">
+        {
+          liveBonusCodes.map((c) => (
+            <article class="lc-card card card-hover">
+              <header class="lc-head">
+                <div class="logo-tile size-40" style={`background-color:${c.brandColor};`}>
+                  {c.casinoName.charAt(0)}
+                </div>
+                <div class="lc-head-meta">
+                  <div class="lc-casino">{c.casinoName}</div>
+                  <div class="lc-time">{timeAgo(c.postedMinutesAgo)} ago</div>
+                </div>
+                <span class:list={['badge', typeColor[c.type]]}>{c.type.replace('-', ' ')}</span>
+              </header>
+              <div class="lc-reward">{c.reward}</div>
+              <div class="lc-foot">
+                <code class="lc-code" data-code={c.code}>{c.code}</code>
+                <button class="btn btn-secondary btn-sm copy-btn" data-copy={c.code}>
+                  <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+                    <rect x="2.5" y="3.5" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2" fill="none" />
+                    <path d="M4.5 1.5h5v5" stroke="currentColor" stroke-width="1.2" fill="none" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="lc-expire">
+                <span class={c.expiresInHours < 24 ? 'text-warning' : 'text-muted'}>
+                  {timeLeft(c.expiresInHours)}
+                </span>
+                {c.verified && (
+                  <span class="lc-verified">
+                    <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+                      <path d="M3 6.5 5.5 9 9.5 4" stroke="#34d399" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    Verified by FairLedger
+                  </span>
+                )}
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script is:inline>
+  document.querySelectorAll('.copy-btn').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const code = btn.getAttribute('data-copy');
+      if (!code) return;
+      try {
+        await navigator.clipboard.writeText(code);
+        const old = btn.innerHTML;
+        btn.innerHTML = 'Copied!';
+        setTimeout(() => (btn.innerHTML = old), 1400);
+      } catch (e) {
+        // ignore
+      }
+    });
+  });
+</script>
+
+<style>
+  .lc-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+  }
+  .filter-tabs {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .filter-tab {
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.15s ease;
+  }
+  .filter-tab:hover {
+    color: #fff;
+    border-color: var(--color-primary);
+  }
+  .filter-tab.active {
+    background: rgba(124, 58, 237, 0.16);
+    color: #fff;
+    border-color: var(--color-primary);
+  }
+  .lc-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+
+  .lc-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  @media (min-width: 720px) {
+    .lc-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .lc-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .lc-card {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .lc-head {
+    display: grid;
+    grid-template-columns: 40px 1fr auto;
+    gap: 12px;
+    align-items: center;
+  }
+  .lc-casino {
+    font-weight: 600;
+    color: #fff;
+    font-size: 14px;
+  }
+  .lc-time {
+    font-size: 11.5px;
+    color: var(--color-text-dim);
+  }
+  .lc-reward {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.4;
+  }
+  .lc-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .lc-code {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    background: rgba(124, 58, 237, 0.18);
+    color: var(--color-primary-soft);
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px dashed rgba(124, 58, 237, 0.42);
+    letter-spacing: 0.05em;
+  }
+  .lc-expire {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    padding-top: 10px;
+    border-top: 1px solid var(--color-border-soft);
+  }
+  .lc-verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11.5px;
+    color: var(--color-success);
+    font-weight: 500;
+  }
+</style>

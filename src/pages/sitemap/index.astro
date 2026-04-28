@@ -1,0 +1,64 @@
+---
+import LegalLayout from '~/layouts/LegalLayout.astro';
+import { footerColumns, pageMeta, routeSlugs, type RouteKey } from '~/data/site';
+---
+
+<LegalLayout routeKey="sitemap">
+  <p>
+    A human-readable index of every public page on FairLedger. Looking for the
+    XML version? <a href="/sitemap-index.xml">Open the XML sitemap</a>.
+  </p>
+
+  {
+    footerColumns.map((col) => (
+      <section class="sitemap-section">
+        <h2>{col.heading}</h2>
+        <ul class="sitemap-list">
+          {col.links.map((link) => {
+            const matchKey = (Object.keys(routeSlugs) as RouteKey[]).find(
+              (k) => routeSlugs[k] === link.href,
+            );
+            const meta = matchKey ? pageMeta[matchKey] : null;
+            return (
+              <li>
+                <a href={link.href}>{link.label}</a>
+                {meta && <p>{meta.description}</p>}
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    ))
+  }
+</LegalLayout>
+
+<style>
+  .sitemap-section {
+    margin-bottom: 32px;
+  }
+  .sitemap-section h2 {
+    font-size: 18px;
+    margin-bottom: 14px;
+  }
+  .sitemap-list {
+    display: grid;
+    gap: 14px;
+  }
+  .sitemap-list li {
+    padding: 14px 16px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+  }
+  .sitemap-list a {
+    color: var(--color-primary-soft);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .sitemap-list p {
+    color: var(--color-text-muted);
+    font-size: 13.5px;
+    margin-top: 4px;
+  }
+</style>

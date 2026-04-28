@@ -1,0 +1,165 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import StatStrip from '~/components/StatStrip.astro';
+import AnalyticsTable from '~/components/AnalyticsTable.astro';
+import CasinoGrid from '~/components/CasinoGrid.astro';
+import Features from '~/components/Features.astro';
+import BetTicker from '~/components/BetTicker.astro';
+import Faq from '~/components/Faq.astro';
+---
+
+<BaseLayout routeKey="home">
+  <Hero />
+  <StatStrip />
+
+  <BetTicker />
+
+  <section class="section">
+    <div class="container">
+      <AnalyticsTable limit={10} />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Top operators</span>
+          <h2 class="section-title">Casinos worth your deposit</h2>
+          <p class="section-subtitle">
+            Ranked by independent score: payout speed, license quality, fairness audit,
+            game library and bonus value. Updated weekly.
+          </p>
+        </div>
+        <a href="/casinos/" class="btn btn-secondary btn-sm">View all 12</a>
+      </div>
+      <CasinoGrid limit={6} />
+    </div>
+  </section>
+
+  <section class="section section-features">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">Why FairLedger</span>
+        <h2 class="section-title">Six tools, one transparent home</h2>
+        <p class="section-subtitle center">
+          Everything we publish is verifiable. No paid placements, no NDA-protected
+          partnerships, no marketing partnerships disguised as journalism.
+        </p>
+      </div>
+      <Features />
+    </div>
+  </section>
+
+  <section class="section section-cta">
+    <div class="container">
+      <div class="cta-card">
+        <div class="cta-glow" aria-hidden="true"></div>
+        <div class="cta-body">
+          <span class="badge">
+            <span class="dot dot-pulse"></span>
+            Wager share live
+          </span>
+          <h2>Earn up to <span class="grad">15% wager share</span> on every spin</h2>
+          <p>
+            Sign up to any covered casino with code <code>FAIRLEDGER</code> and we will
+            credit your wager share back automatically every Sunday at 23:59 UTC.
+            No staking, no claim, no minimums.
+          </p>
+          <div class="cta-actions">
+            <a href="/casinos/" class="btn btn-primary btn-lg">See eligible casinos</a>
+            <a href="/transparency/" class="btn btn-secondary btn-lg">How payouts work</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">FAQ</span>
+        <h2 class="section-title">Common questions</h2>
+      </div>
+      <Faq />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .section-head.center {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .section-subtitle.center {
+    margin: 0 auto;
+  }
+  .section-features {
+    background: linear-gradient(180deg, transparent, rgba(124, 58, 237, 0.06), transparent);
+  }
+  .section-cta {
+    padding-bottom: 40px;
+  }
+  .cta-card {
+    position: relative;
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(124, 58, 237, 0.4);
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.16), rgba(20, 184, 166, 0.06));
+    padding: 56px 32px;
+    text-align: center;
+    overflow: hidden;
+  }
+  .cta-glow {
+    position: absolute;
+    inset: -50%;
+    background: radial-gradient(closest-side, rgba(124, 58, 237, 0.35), transparent 70%);
+    z-index: 0;
+  }
+  .cta-body {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .cta-body h2 {
+    font-size: clamp(28px, 4vw, 40px);
+    margin: 18px 0;
+    line-height: 1.1;
+  }
+  .grad {
+    background: linear-gradient(135deg, #c4b5fd 0%, #7c3aed 50%, #14b8a6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .cta-body p {
+    color: var(--color-text-soft);
+    font-size: 16px;
+    margin-bottom: 28px;
+  }
+  .cta-body code {
+    font-family: var(--font-mono);
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+  }
+</style>

@@ -1,0 +1,235 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+---
+
+<BaseLayout routeKey="bonusCalculator">
+  <PageHero
+    eyebrow="Tools"
+    title="Bonus wagering calculator"
+    subtitle="Plug in any deposit-bonus offer and see its true expected value after wagering, max-bet caps and game contribution. Numbers are rounded to two decimal places."
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="calc-grid">
+        <form class="calc-form card" onsubmit="return false">
+          <div class="calc-row">
+            <div class="form-group">
+              <label for="deposit">Your deposit ($)</label>
+              <input id="deposit" type="number" min="0" value="100" />
+            </div>
+            <div class="form-group">
+              <label for="match">Match %</label>
+              <input id="match" type="number" min="0" value="200" />
+            </div>
+          </div>
+          <div class="calc-row">
+            <div class="form-group">
+              <label for="wager">Wagering multiplier (x)</label>
+              <input id="wager" type="number" min="0" value="35" />
+            </div>
+            <div class="form-group">
+              <label for="rtp">Game RTP (%)</label>
+              <input id="rtp" type="number" min="0" max="100" step="0.1" value="96.5" />
+            </div>
+          </div>
+          <div class="calc-row">
+            <div class="form-group">
+              <label for="contrib">Game contribution (%)</label>
+              <input id="contrib" type="number" min="0" max="100" value="100" />
+            </div>
+            <div class="form-group">
+              <label for="maxbet">Max bet ($)</label>
+              <input id="maxbet" type="number" min="0" value="5" />
+            </div>
+          </div>
+          <button class="btn btn-primary btn-lg" type="button">Recalculate</button>
+        </form>
+
+        <aside class="calc-result card">
+          <div class="result-row">
+            <div>
+              <div class="result-label">Bonus credit</div>
+              <div class="result-value">$200.00</div>
+            </div>
+            <div>
+              <div class="result-label">Wager required</div>
+              <div class="result-value">$7,000</div>
+            </div>
+          </div>
+
+          <div class="result-row">
+            <div>
+              <div class="result-label">Expected loss to wagering</div>
+              <div class="result-value text-danger">$245.00</div>
+            </div>
+            <div>
+              <div class="result-label">True expected value</div>
+              <div class="result-value text-success">+$55.00</div>
+            </div>
+          </div>
+
+          <div class="result-bar" aria-hidden="true">
+            <div class="result-bar-fill" style="width:36%;"></div>
+          </div>
+          <div class="result-foot">
+            <span class="text-muted">Recommended verdict</span>
+            <span class="badge badge-success">Take it</span>
+          </div>
+
+          <p class="result-help">
+            Verdict assumes you can complete the wagering before the bonus expires
+            and you stay under the max-bet cap on every spin. If either fails, the
+            bonus voids and your expected value is the deposit minus expected RTP loss.
+          </p>
+        </aside>
+      </div>
+
+      <div class="calc-tips card">
+        <h3>Three rules of thumb</h3>
+        <ul>
+          <li>
+            Anything over <strong>40x</strong> wagering with <strong>96% RTP</strong>
+            slots is almost always negative EV.
+          </li>
+          <li>
+            Cashback (no wagering) beats deposit match (heavy wagering) for any
+            stake size above $250 in 9 cases out of 10.
+          </li>
+          <li>
+            If the bonus terms forbid your favourite game (live dealer, baccarat,
+            jackpot slots), the headline match % does not matter - skip it.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .calc-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 22px;
+    margin-bottom: 36px;
+  }
+  @media (min-width: 900px) {
+    .calc-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .calc-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .calc-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .form-group input {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--color-border);
+    color: #fff;
+    padding: 11px 14px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    transition: border-color 0.15s ease;
+  }
+  .form-group input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background: rgba(124, 58, 237, 0.06);
+  }
+  .calc-result {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    background: linear-gradient(180deg, rgba(124, 58, 237, 0.08), rgba(124, 58, 237, 0)) var(--color-surface);
+  }
+  .result-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .result-label {
+    font-size: 11px;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .result-value {
+    font-size: 24px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .result-bar {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .result-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #34d399, #14b8a6);
+  }
+  .result-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .result-help {
+    font-size: 12.5px;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+  }
+  .calc-tips {
+    padding: 26px;
+  }
+  .calc-tips h3 {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  .calc-tips ul {
+    display: grid;
+    gap: 10px;
+  }
+  .calc-tips li {
+    color: var(--color-text-soft);
+    font-size: 14.5px;
+    padding-left: 22px;
+    position: relative;
+  }
+  .calc-tips li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-primary);
+  }
+  .calc-tips strong {
+    color: #fff;
+  }
+</style>

@@ -1,0 +1,51 @@
+---
+import LegalLayout from '~/layouts/LegalLayout.astro';
+import { BRAND_NAME } from '~/data/site';
+---
+
+<LegalLayout routeKey="ageVerification">
+  <p>
+    {BRAND_NAME} content is for adults aged <strong>18 and over only</strong>
+    (21+ in some jurisdictions including parts of the United States, Egypt,
+    Greece and South Korea). We take age gating seriously and require every
+    operator we cover to do the same.
+  </p>
+
+  <h2>1. Our age policy</h2>
+  <p>
+    By using {BRAND_NAME} you confirm you are at least 18 (or the higher local
+    minimum age where you live). We do not knowingly collect personal data
+    from minors. If you believe a minor has submitted information to us, email
+    <code>privacy@fairledger.io</code> and we will delete it within 48 hours.
+  </p>
+
+  <h2>2. How operators verify age</h2>
+  <p>Every casino we cover requires at least one of the following before allowing a withdrawal above a low limit:</p>
+  <ul>
+    <li>Government-issued photo ID (passport, national ID, driving licence).</li>
+    <li>Proof of address less than 90 days old (utility bill, bank statement).</li>
+    <li>Liveness selfie matched against the photo ID.</li>
+    <li>Source-of-funds documentation for high-roller accounts.</li>
+  </ul>
+  <p>
+    Withdrawal thresholds before KYC is requested vary by operator. See our
+    <a href="/blog/kyc-free-casinos-the-real-list/">KYC reference table</a> for
+    each operator's current limits.
+  </p>
+
+  <h2>3. Tools for parents</h2>
+  <p>
+    If you share a household with an under-18, please install one of:
+    <strong>Net Nanny</strong>, <strong>Bark</strong>, <strong>Qustodio</strong>
+    or your operating system's parental controls. These can block known
+    gambling URLs at the device level even if the operator cannot identify the
+    user.
+  </p>
+
+  <h2>4. Reporting under-age accounts</h2>
+  <p>
+    If you suspect a minor is using a casino we cover, please report it
+    directly to the operator's support team and copy us at
+    <code>support@fairledger.io</code> so we can follow up.
+  </p>
+</LegalLayout>

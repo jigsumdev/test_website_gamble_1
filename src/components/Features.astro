@@ -1,0 +1,100 @@
+---
+const features = [
+  {
+    title: 'On-chain transparency',
+    desc: 'We index every public deposit to operator wallets across Bitcoin, Ethereum, Solana, Tron and Lightning - then publish the raw numbers.',
+    icon: 'chain',
+  },
+  {
+    title: 'Provably fair verifier',
+    desc: 'Drop a server seed, client seed and nonce into our tool to confirm any round was settled before the operator could see your bet.',
+    icon: 'shield',
+  },
+  {
+    title: 'Live bonus codes',
+    desc: 'A streaming feed of fresh signup, reload and no-deposit bonuses - filterable by casino, value and expiry.',
+    icon: 'gift',
+  },
+  {
+    title: 'Real reviews, no payola',
+    desc: 'Every casino review is written by an editor who has personally deposited and withdrawn. Affiliate links never affect ranking.',
+    icon: 'pen',
+  },
+  {
+    title: 'Bonus value calculator',
+    desc: 'Plug in wagering, max bet, RTP and game contribution to see the true expected value of any bonus offer.',
+    icon: 'calc',
+  },
+  {
+    title: 'Wager-share rewards',
+    desc: 'Sign up via FairLedger and earn up to 15% of your wagers back - automatically credited each Sunday at 23:59 UTC.',
+    icon: 'coin',
+  },
+];
+
+const icons: Record<string, string> = {
+  chain:
+    '<path d="M9 13h-3a4 4 0 0 1 0-8h3M15 13h3a4 4 0 0 0 0-8h-3M8 9h8" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+  shield:
+    '<path d="M12 3 4 6v6c0 4.5 3.5 8 8 9 4.5-1 8-4.5 8-9V6l-8-3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+  gift:
+    '<path d="M3 8h18v4H3zM5 12v9h14v-9M12 8v13M9 8a2 2 0 1 1 0-4c1.4 0 3 2 3 4M15 8a2 2 0 1 0 0-4c-1.4 0-3 2-3 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+  pen:
+    '<path d="M5 19 4 20l1-4 11-11 3 3-11 11-4 1Zm9-13 3 3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+  calc:
+    '<rect x="5" y="3" width="14" height="18" rx="2" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M8 7h8M8 12h2m3 0h3M8 16h2m3 0h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>',
+  coin:
+    '<circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M9 9c0-1 1-2 3-2s3 1 3 2-1 2-3 2-3 1-3 2 1 2 3 2 3-1 3-2M12 6v12" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/>',
+};
+---
+
+<div class="features-grid">
+  {
+    features.map((f) => (
+      <article class="feature card card-hover">
+        <div class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" set:html={icons[f.icon]} />
+        </div>
+        <h3>{f.title}</h3>
+        <p>{f.desc}</p>
+      </article>
+    ))
+  }
+</div>
+
+<style>
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media (min-width: 720px) {
+    .features-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .features-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .feature h3 {
+    font-size: 17px;
+    margin: 12px 0 6px;
+  }
+  .feature p {
+    font-size: 14.5px;
+    color: var(--color-text-muted);
+  }
+  .feature-icon {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(20, 184, 166, 0.12));
+    border: 1px solid rgba(124, 58, 237, 0.32);
+    color: #c4b5fd;
+    border-radius: 12px;
+  }
+</style>

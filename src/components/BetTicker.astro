@@ -1,0 +1,101 @@
+---
+import { betFeed } from '~/data/casinos';
+
+const items = [...betFeed, ...betFeed]; // duplicate for seamless scroll
+---
+
+<section class="ticker-section">
+  <div class="container ticker-head">
+    <span class="eyebrow">Live big wins</span>
+    <span class="ticker-tag">
+      <span class="dot dot-pulse"></span>
+      Streaming feed
+    </span>
+  </div>
+  <div class="ticker-mask">
+    <div class="ticker-track">
+      {
+        items.map((b) => (
+          <div class="bet-pill">
+            <div class="logo-tile size-32" style={`background-color:${b.brandColor};`} aria-hidden="true">
+              {b.casino.charAt(0)}
+            </div>
+            <div class="bet-info">
+              <div class="bet-row1">
+                <span class="bet-player">{b.player}</span>
+                <span class="bet-game">{b.game}</span>
+              </div>
+              <div class="bet-row2">
+                <span class="bet-mult">{b.multiplier.toFixed(2)}x</span>
+                <span class="bet-pay">${b.payout.toLocaleString()}</span>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .ticker-section {
+    padding: 28px 0 36px;
+  }
+  .ticker-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .ticker-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+  .bet-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px 8px 8px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    flex-shrink: 0;
+  }
+  .bet-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .bet-row1 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+  }
+  .bet-player {
+    color: #fff;
+    font-weight: 600;
+  }
+  .bet-game {
+    color: var(--color-text-muted);
+  }
+  .bet-row2 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11.5px;
+    font-weight: 700;
+  }
+  .bet-mult {
+    color: var(--color-warning);
+  }
+  .bet-pay {
+    color: var(--color-success);
+  }
+</style>

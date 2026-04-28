@@ -1,0 +1,154 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+---
+
+<BaseLayout routeKey="provablyFair">
+  <PageHero
+    eyebrow="Education"
+    title="Provably fair, explained"
+    subtitle="A 4-minute crash course in how the best crypto casinos prove they cannot rig a result, plus links to the verifier you can run yourself."
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="pf-intro card">
+        <p>
+          Provably fair gambling is a cryptographic guarantee that the casino cannot
+          change the outcome of a bet after seeing it. It does <strong>not</strong>
+          guarantee the casino is honest about its bankroll, its withdrawal queue or
+          its bonus terms - but it does prove that the dice, the deal or the spin you
+          just played out was sealed before you placed the bet.
+        </p>
+      </div>
+
+      <div class="pf-steps">
+        <article class="pf-step card">
+          <div class="pf-num">1</div>
+          <h3>The casino commits</h3>
+          <p>
+            Before your session starts, the casino generates a server seed and
+            publishes its SHA256 hash. The hash is a one-way fingerprint - the casino
+            cannot change the seed without changing the hash you already saw.
+          </p>
+        </article>
+        <article class="pf-step card">
+          <div class="pf-num">2</div>
+          <h3>You contribute entropy</h3>
+          <p>
+            You generate or modify a client seed. Because the round result is a
+            function of both seeds, the casino cannot predict the outcome any better
+            than you can - and you cannot predict it any better than they can.
+          </p>
+        </article>
+        <article class="pf-step card">
+          <div class="pf-num">3</div>
+          <h3>The round is rolled</h3>
+          <p>
+            HMAC-SHA256 of the (server seed, client seed, nonce) triple produces a
+            deterministic hash. The first few bytes are folded into a number in the
+            range each game requires - 0 to 99.99 for dice, 0 to 1 for crash, etc.
+          </p>
+        </article>
+        <article class="pf-step card">
+          <div class="pf-num">4</div>
+          <h3>You verify after the fact</h3>
+          <p>
+            When you rotate the server seed, the casino reveals the original
+            unhashed seed. You SHA256 it, confirm it matches the hash you saw at the
+            start, then re-roll every round in our
+            <a href="/seed-analyzer/">seed analyzer</a> to make sure the casino did
+            not lie about the result.
+          </p>
+        </article>
+      </div>
+
+      <div class="card pf-tldr">
+        <h2>TL;DR</h2>
+        <p>
+          If the unhashed seed the casino reveals matches the hash they showed at the
+          start, and our verifier produces the same roll the casino displayed, the
+          round was fair. If either check fails, the casino was caught.
+        </p>
+        <a class="btn btn-primary" href="/seed-analyzer/">Open the seed analyzer</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .pf-intro {
+    margin-bottom: 32px;
+    padding: 28px;
+    border-color: rgba(124, 58, 237, 0.32);
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(20, 184, 166, 0.04));
+  }
+  .pf-intro p {
+    font-size: 17px;
+    color: var(--color-text-soft);
+    line-height: 1.6;
+  }
+  .pf-intro strong {
+    color: #fff;
+  }
+  .pf-steps {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  @media (min-width: 720px) {
+    .pf-steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  .pf-step {
+    position: relative;
+    padding-top: 28px;
+  }
+  .pf-num {
+    position: absolute;
+    top: -16px;
+    left: 22px;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+    color: #fff;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 14px rgba(124, 58, 237, 0.4);
+  }
+  .pf-step h3 {
+    font-size: 17px;
+    margin-bottom: 6px;
+  }
+  .pf-step p {
+    font-size: 14px;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+  .pf-step a {
+    color: var(--color-primary-soft);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .pf-tldr {
+    text-align: center;
+    padding: 36px;
+    border-color: rgba(20, 184, 166, 0.32);
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.08), rgba(124, 58, 237, 0.04));
+  }
+  .pf-tldr h2 {
+    margin-bottom: 12px;
+  }
+  .pf-tldr p {
+    color: var(--color-text-soft);
+    margin-bottom: 22px;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>

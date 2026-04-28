@@ -1,0 +1,51 @@
+---
+import LegalLayout from '~/layouts/LegalLayout.astro';
+import { CONTACT_EMAIL, SUPPORT_EMAIL } from '~/data/site';
+---
+
+<LegalLayout routeKey="support">
+  <p>
+    Get help with the FairLedger site, the wager-share program, a bonus code
+    that did not redeem or a casino dispute. We respond fast - target SLA is
+    one business day for general questions and same day for press.
+  </p>
+
+  <h2>1. Help yourself first</h2>
+  <ul>
+    <li><a href="/casinos/">Casino directory</a> with verified license and payout data.</li>
+    <li><a href="/livecodes/">Live bonus codes</a> with verification status and expiry.</li>
+    <li><a href="/seed-analyzer/">Seed analyzer</a> to verify any provably fair round.</li>
+    <li><a href="/transparency/">Transparency report</a> for our methodology and corrections process.</li>
+  </ul>
+
+  <h2>2. Email us</h2>
+  <ul>
+    <li>General: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> - 1 business day.</li>
+    <li>Wager-share / payouts: <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> - 24 hours.</li>
+    <li>Data corrections: <code>data@fairledger.io</code> - 48 hours.</li>
+    <li>Press: <code>press@fairledger.io</code> - same day.</li>
+  </ul>
+
+  <h2>3. Casino disputes we can help with</h2>
+  <p>
+    If you have a withdrawal that is stuck for more than 72 hours at a casino
+    you signed up to via a FairLedger link, email us with the casino, your
+    deposit transaction hash and any reference number. We escalate to the
+    operator on your behalf and publish unresolved disputes after 14 days.
+  </p>
+
+  <h2>4. Casino disputes we cannot help with</h2>
+  <p>
+    We cannot intervene in disputes about (a) casinos we do not cover, (b) self
+    excluded accounts, (c) breaches of operator terms (e.g. multi-accounting),
+    or (d) legal disputes already with a regulator or a third-party arbitrator
+    such as eCOGRA.
+  </p>
+
+  <h2>5. Responsible play</h2>
+  <p>
+    If gambling is becoming a problem, please visit our
+    <a href="/responsible-gambling/">responsible gambling page</a> for
+    self-exclusion tools and crisis hotlines.
+  </p>
+</LegalLayout>

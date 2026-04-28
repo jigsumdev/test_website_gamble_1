@@ -1,0 +1,277 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import { BRAND_NAME, BRAND_LEGAL_NAME, businessInfo } from '~/data/site';
+
+const team = [
+  {
+    name: 'Mira Holst',
+    role: 'Editor in chief',
+    bio: 'Former data journalist at the Wall Street Journal. Built the original wallet-attribution methodology FairLedger uses today.',
+    initials: 'MH',
+  },
+  {
+    name: 'Daniel Ng',
+    role: 'Head of analytics',
+    bio: 'Spent six years building blockchain forensics tools at Chainalysis before joining FairLedger to make them public.',
+    initials: 'DN',
+  },
+  {
+    name: 'Saira Patel',
+    role: 'Senior reviewer',
+    bio: 'Has personally deposited and withdrawn from every major crypto casino since 2019. Writes the in-depth review series.',
+    initials: 'SP',
+  },
+  {
+    name: 'Theo Brandt',
+    role: 'Engineering lead',
+    bio: 'Open-source contributor to multiple chain-indexing libraries. Maintains the FairLedger ranking-algorithm repo.',
+    initials: 'TB',
+  },
+];
+
+const milestones = [
+  { year: '2023', text: `${BRAND_NAME} launches as a public Notion page tracking five operator wallets.` },
+  { year: '2024', text: 'Open-source ranking algorithm published. First six casinos onboarded under the FairLedger code.' },
+  { year: '2025', text: 'Wager-share program crosses $1M in payouts. Full editorial firewall and audit log shipped.' },
+  { year: '2026', text: '12 casinos covered, 240+ wallets indexed, weekly leaderboard pays out $25k every Sunday.' },
+];
+---
+
+<BaseLayout routeKey="about">
+  <PageHero
+    eyebrow={`About ${BRAND_NAME}`}
+    title="An independent transparency project for crypto casinos"
+    subtitle={`${BRAND_LEGAL_NAME} is a UK-registered private company. We are reader-funded, take no operator equity and publish every line of our methodology in public.`}
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="about-cards">
+        <div class="card">
+          <h3>Our mission</h3>
+          <p>
+            The crypto casino industry has more honest operators than its reputation
+            suggests, and more dishonest ones than its marketing implies. We make the
+            difference visible: with on-chain data, with provably fair audits and with
+            reviews written by people who actually deposit and withdraw.
+          </p>
+        </div>
+        <div class="card">
+          <h3>How we are different</h3>
+          <p>
+            Most casino review sites are paid placement schemes. We rank algorithmically.
+            We do not accept payment for coverage. We list every conflict of interest in
+            the open. And we share back the majority of every affiliate dollar with the
+            user who generated it.
+          </p>
+        </div>
+      </div>
+
+      <div class="team-section">
+        <h2 class="section-title">The team</h2>
+        <p class="section-subtitle">Four humans, one open methodology.</p>
+        <div class="team-grid">
+          {
+            team.map((m) => (
+              <article class="team-card card card-hover">
+                <div class="team-avatar">{m.initials}</div>
+                <div class="team-name">{m.name}</div>
+                <div class="team-role">{m.role}</div>
+                <p>{m.bio}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="timeline-section">
+        <h2 class="section-title">Milestones</h2>
+        <ol class="timeline">
+          {
+            milestones.map((m) => (
+              <li>
+                <div class="timeline-year">{m.year}</div>
+                <div class="timeline-text">{m.text}</div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+
+      <div class="company-card card">
+        <h3>Company details</h3>
+        <dl class="company-dl">
+          <div>
+            <dt>Legal name</dt>
+            <dd>{businessInfo.legalName}</dd>
+          </div>
+          <div>
+            <dt>Jurisdiction</dt>
+            <dd>{businessInfo.jurisdiction}</dd>
+          </div>
+          <div>
+            <dt>Registered address</dt>
+            <dd>{businessInfo.registeredAddress}</dd>
+          </div>
+          <div>
+            <dt>Editorial contact</dt>
+            <dd>{businessInfo.contactEmail}</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 64px;
+  }
+  @media (min-width: 720px) {
+    .about-cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  .about-cards h3 {
+    font-size: 19px;
+    margin-bottom: 10px;
+  }
+  .about-cards p {
+    color: var(--color-text-soft);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  .team-section {
+    margin-bottom: 64px;
+  }
+  .team-section .section-subtitle {
+    margin-bottom: 28px;
+  }
+  .team-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media (min-width: 720px) {
+    .team-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .team-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .team-card {
+    text-align: center;
+    padding: 24px;
+  }
+  .team-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    margin: 0 auto 14px;
+    background: linear-gradient(135deg, #7c3aed, #14b8a6);
+    color: #fff;
+    font-weight: 800;
+    font-size: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .team-name {
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .team-role {
+    color: var(--color-primary-soft);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+  .team-card p {
+    font-size: 13.5px;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+  }
+  .timeline-section {
+    margin-bottom: 64px;
+  }
+  .timeline {
+    margin-top: 28px;
+    counter-reset: t;
+    border-left: 2px solid var(--color-border);
+    padding-left: 28px;
+    display: grid;
+    gap: 22px;
+  }
+  .timeline li {
+    position: relative;
+  }
+  .timeline li::before {
+    content: '';
+    position: absolute;
+    left: -36px;
+    top: 6px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    box-shadow: 0 0 0 4px var(--color-bg), 0 0 0 5px var(--color-primary);
+  }
+  .timeline-year {
+    color: var(--color-primary-soft);
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .timeline-text {
+    color: var(--color-text-soft);
+    font-size: 15px;
+    margin-top: 4px;
+  }
+  .company-card {
+    padding: 28px;
+  }
+  .company-card h3 {
+    margin-bottom: 18px;
+    font-size: 19px;
+  }
+  .company-dl {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  @media (min-width: 720px) {
+    .company-dl {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  .company-dl > div {
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid var(--color-border-soft);
+    border-radius: 10px;
+  }
+  .company-dl dt {
+    font-size: 11px;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .company-dl dd {
+    color: #fff;
+    font-size: 14px;
+    margin: 0;
+  }
+</style>

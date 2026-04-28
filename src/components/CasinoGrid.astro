@@ -1,0 +1,220 @@
+---
+import { casinos } from '~/data/casinos';
+
+interface Props {
+  limit?: number;
+}
+const { limit = 12 } = Astro.props;
+const items = casinos.slice(0, limit);
+---
+
+<div class="cgrid">
+  {
+    items.map((c) => (
+      <article class="ccard card card-hover">
+        <header class="ccard-head">
+          <div class="logo-tile size-48" style={`background-color:${c.brandColor};`} aria-hidden="true">
+            {c.logoInitials}
+          </div>
+          <div class="ccard-title">
+            <h3>{c.name}</h3>
+            <div class="ccard-meta">
+              <span class="rating-row">
+                <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+                  <path
+                    fill="#fbbf24"
+                    d="m6 1 1.6 3.2 3.5.5-2.55 2.5.6 3.5L6 9 2.85 10.7l.6-3.5L.9 4.7l3.5-.5L6 1Z"
+                  />
+                </svg>
+                {c.rating.toFixed(1)}
+              </span>
+              <span class="meta-dot" aria-hidden="true">·</span>
+              <span class="meta-text">Est. {c.established}</span>
+              <span class="meta-dot" aria-hidden="true">·</span>
+              <span class="meta-text">{c.payout}</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="ccard-bonus">
+          <div class="bonus-label">Welcome bonus</div>
+          <div class="bonus-value">{c.signupBonus}</div>
+        </div>
+
+        <ul class="ccard-feats">
+          <li>
+            <span class="feat-key">Rakeback</span>
+            <span class="feat-val">{c.rakebackPct}%</span>
+          </li>
+          <li>
+            <span class="feat-key">License</span>
+            <span class="feat-val small">{c.license.split(' ')[0]}</span>
+          </li>
+          <li>
+            <span class="feat-key">Cryptos</span>
+            <span class="feat-val">{c.cryptos.length}</span>
+          </li>
+        </ul>
+
+        <div class="ccard-tags">
+          {c.cryptos.slice(0, 5).map((cr) => <span class="chip">{cr}</span>)}
+          {c.cryptos.length > 5 && <span class="chip chip-more">+{c.cryptos.length - 5}</span>}
+        </div>
+
+        <div class="ccard-foot">
+          <code class="code-pill">{c.promoCode}</code>
+          <a class="btn btn-primary btn-sm" href={c.url} rel="nofollow sponsored noopener" target="_blank">
+            Visit
+            <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+              <path d="M3 9 9 3m0 0H4m5 0v5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" />
+            </svg>
+          </a>
+        </div>
+      </article>
+    ))
+  }
+</div>
+
+<style>
+  .cgrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media (min-width: 640px) {
+    .cgrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .cgrid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .ccard {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+  .ccard-head {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+  .ccard-title h3 {
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+  .ccard-meta {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 12.5px;
+    color: var(--color-text-muted);
+  }
+  .rating-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #fbbf24;
+    font-weight: 600;
+  }
+  .meta-dot {
+    color: var(--color-text-dim);
+  }
+  .ccard-bonus {
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(20, 184, 166, 0.08));
+    border: 1px solid rgba(124, 58, 237, 0.28);
+    padding: 12px 14px;
+    border-radius: var(--radius);
+    margin-bottom: 14px;
+  }
+  .bonus-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-primary-soft);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .bonus-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+  .ccard-feats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .ccard-feats li {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid var(--color-border-soft);
+    padding: 9px 10px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  .feat-key {
+    display: block;
+    font-size: 10.5px;
+    color: var(--color-text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .feat-val {
+    display: block;
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .feat-val.small {
+    font-size: 12px;
+  }
+  .ccard-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .chip {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: rgba(56, 189, 248, 0.1);
+    color: #7dd3fc;
+    border: 1px solid rgba(56, 189, 248, 0.22);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .chip-more {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--color-text-muted);
+    border-color: var(--color-border);
+  }
+  .ccard-foot {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 14px;
+    border-top: 1px solid var(--color-border-soft);
+  }
+  .code-pill {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    background: rgba(124, 58, 237, 0.18);
+    color: var(--color-primary-soft);
+    padding: 5px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(124, 58, 237, 0.32);
+  }
+</style>

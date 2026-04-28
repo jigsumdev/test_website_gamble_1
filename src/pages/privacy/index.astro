@@ -1,0 +1,103 @@
+---
+import LegalLayout from '~/layouts/LegalLayout.astro';
+import { BRAND_NAME, BRAND_LEGAL_NAME, CONTACT_EMAIL } from '~/data/site';
+---
+
+<LegalLayout routeKey="privacy">
+  <p>
+    This Privacy Policy explains how {BRAND_LEGAL_NAME} ("we", "us", "{BRAND_NAME}")
+    collects, uses, shares and protects your personal data when you visit
+    fairledger.io or interact with our products. We comply with the UK GDPR, the EU
+    GDPR, the Data Protection Act 2018 and PIPEDA where applicable.
+  </p>
+
+  <h2>1. Data we collect</h2>
+  <p>We collect three categories of personal data:</p>
+  <ul>
+    <li>
+      <strong>Information you give us</strong> - your email address when you
+      contact us, sign in or sign up for the wager-share program.
+    </li>
+    <li>
+      <strong>Information collected automatically</strong> - your IP address
+      (truncated to /24 within 24 hours), the page you viewed, the page that
+      referred you and your user agent. We do <strong>not</strong> use third-party
+      analytics scripts. Server logs are retained for 30 days for security.
+    </li>
+    <li>
+      <strong>On-chain transaction data</strong> - when we attribute a payout to
+      your wallet for the wager-share program, we record only the wallet address
+      and amount, not your name or email.
+    </li>
+  </ul>
+
+  <h2>2. Why we use your data</h2>
+  <ul>
+    <li>To reply to questions you submit through the contact form.</li>
+    <li>To deliver wager-share rewards you have earned.</li>
+    <li>To prevent abuse, fraud and bot scraping of our data feeds.</li>
+    <li>To produce aggregate, anonymised traffic statistics.</li>
+  </ul>
+
+  <h2>3. Lawful basis</h2>
+  <p>
+    We rely on (a) <strong>contract</strong> performance for wager-share payouts,
+    (b) <strong>legitimate interests</strong> for security logs and product
+    analytics and (c) <strong>consent</strong> for any marketing email you opt
+    into. You may withdraw consent at any time without affecting prior processing.
+  </p>
+
+  <h2>4. Who we share data with</h2>
+  <p>We use a small set of vetted processors:</p>
+  <ul>
+    <li><strong>Cloudflare</strong> - CDN, hosting, DDoS protection (UK / EU regions).</li>
+    <li><strong>Stripe</strong> - if you ever pay us, payment processing only.</li>
+    <li><strong>Google Workspace</strong> - email delivery for the contact form.</li>
+  </ul>
+  <p>
+    We do not sell personal data to anyone, ever. Operators referenced on the
+    site receive only your sign-up referral - they do not receive your email or
+    any FairLedger account data.
+  </p>
+
+  <h2>5. International transfers</h2>
+  <p>
+    Some processors are based in the United States. Where data leaves the UK or
+    the EEA, we rely on the UK International Data Transfer Addendum and the EU
+    Standard Contractual Clauses (June 2021).
+  </p>
+
+  <h2>6. Retention</h2>
+  <ul>
+    <li>Server logs: 30 days.</li>
+    <li>Wager-share payout records: 7 years (UK financial-records law).</li>
+    <li>Contact-form messages: 18 months from last reply, then deleted.</li>
+  </ul>
+
+  <h2>7. Your rights</h2>
+  <p>You have the right to:</p>
+  <ul>
+    <li>Access a copy of the personal data we hold about you.</li>
+    <li>Correct inaccurate data.</li>
+    <li>Erase your data ("right to be forgotten").</li>
+    <li>Restrict or object to processing.</li>
+    <li>Receive your data in a portable format.</li>
+    <li>Lodge a complaint with the UK Information Commissioner's Office (ico.org.uk).</li>
+  </ul>
+  <p>
+    Exercise any of these by emailing <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+    We respond within 30 days.
+  </p>
+
+  <h2>8. Cookies</h2>
+  <p>
+    See our <a href="/cookies/">cookie policy</a> for the full list of cookies we
+    set, their purpose and how to disable them.
+  </p>
+
+  <h2>9. Changes to this policy</h2>
+  <p>
+    We will post material updates here at least 30 days before they take effect
+    and email registered users.
+  </p>
+</LegalLayout>

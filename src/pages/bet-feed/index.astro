@@ -1,0 +1,144 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import { betFeed } from '~/data/casinos';
+
+const items = [...betFeed, ...betFeed.slice(0, 6)];
+
+function fmtSec(s: number) {
+  if (s < 60) return `${s}s`;
+  return `${Math.floor(s / 60)}m`;
+}
+---
+
+<BaseLayout routeKey="betFeed">
+  <PageHero
+    eyebrow="Live wins"
+    title="Big wins, in real time"
+    subtitle="Every public big-win bet across the casinos we cover, streamed as the result is settled. Filter by game, multiplier or stake."
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="bf-toolbar">
+        <div class="filter-tabs">
+          <button class="filter-tab active">All</button>
+          <button class="filter-tab">Slots</button>
+          <button class="filter-tab">Originals</button>
+          <button class="filter-tab">Live dealer</button>
+          <button class="filter-tab">100x+</button>
+          <button class="filter-tab">$10k+</button>
+        </div>
+        <div class="lc-meta">
+          <span class="dot dot-pulse"></span>
+          {items.length} bets streaming
+        </div>
+      </div>
+
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>When</th>
+              <th>Player</th>
+              <th>Casino</th>
+              <th>Game</th>
+              <th>Bet</th>
+              <th>Multiplier</th>
+              <th>Payout</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              items.map((b, idx) => (
+                <tr>
+                  <td class="num-soft">{fmtSec(b.secondsAgo + idx * 30)}</td>
+                  <td>
+                    <div class="bf-player-cell">
+                      <div class="lb-avatar">{b.player.charAt(0).toUpperCase()}</div>
+                      <span>{b.player}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="bf-casino-cell">
+                      <div class="logo-tile size-32" style={`background-color:${b.brandColor};`}>
+                        {b.casino.charAt(0)}
+                      </div>
+                      <span>{b.casino}</span>
+                    </div>
+                  </td>
+                  <td>{b.game}</td>
+                  <td class="num-soft">${b.bet.toFixed(2)}</td>
+                  <td class="num text-warning">{b.multiplier.toFixed(2)}x</td>
+                  <td class="num text-success">${b.payout.toLocaleString()}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .bf-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+  }
+  .filter-tabs {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .filter-tab {
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.15s ease;
+  }
+  .filter-tab.active {
+    background: rgba(124, 58, 237, 0.16);
+    color: #fff;
+    border-color: var(--color-primary);
+  }
+  .lc-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+  .bf-player-cell,
+  .bf-casino-cell {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .lb-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7c3aed, #14b8a6);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>

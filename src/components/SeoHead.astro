@@ -1,0 +1,92 @@
+---
+import {
+  BRAND_NAME,
+  BRAND_TAGLINE,
+  SITE_URL,
+  pageMeta,
+  type RouteKey,
+  getCanonicalUrl,
+} from '~/data/site';
+
+interface Props {
+  routeKey: RouteKey;
+  title?: string;
+  description?: string;
+}
+
+const { routeKey, title: titleOverride, description: descriptionOverride } = Astro.props;
+const meta = pageMeta[routeKey];
+const title = titleOverride ?? meta.title;
+const description = descriptionOverride ?? meta.description;
+const canonical = getCanonicalUrl(routeKey);
+const ogImage = `${SITE_URL}/og-default.svg`;
+---
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0B0F1E" />
+<meta name="format-detection" content="telephone=no" />
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<meta property="og:site_name" content={BRAND_NAME} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonical} />
+<meta property="og:locale" content="en_US" />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+<link rel="manifest" href="/manifest.json" />
+
+{
+  routeKey === 'home' && (
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: BRAND_NAME,
+        alternateName: BRAND_TAGLINE,
+        url: SITE_URL,
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: `${SITE_URL}/casinos/?q={search_term_string}`,
+          'query-input': 'required name=search_term_string',
+        },
+      })}
+    />
+  )
+}
+{
+  routeKey === 'home' && (
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: BRAND_NAME,
+        url: SITE_URL,
+        logo: `${SITE_URL}/favicon.svg`,
+        sameAs: [
+          'https://x.com/FairLedger',
+          'https://discord.gg/fairledger',
+          'https://t.me/fairledger',
+        ],
+      })}
+    />
+  )
+}

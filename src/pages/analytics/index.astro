@@ -1,0 +1,200 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import StatStrip from '~/components/StatStrip.astro';
+import AnalyticsTable from '~/components/AnalyticsTable.astro';
+import { analytics30d } from '~/data/casinos';
+
+const top3 = analytics30d.slice(0, 3);
+---
+
+<BaseLayout routeKey="analytics">
+  <PageHero
+    eyebrow="On-chain analytics"
+    title="Live deposit volume across the crypto casino industry"
+    subtitle="Indexed every five minutes from public chain data. No operator-supplied figures, no estimations - just the wallets, the transactions and the maths."
+  />
+  <StatStrip />
+
+  <section class="section">
+    <div class="container">
+      <div class="bigshare">
+        {
+          top3.map((row) => (
+            <div class="bigshare-card">
+              <div class="bigshare-head">
+                <div class="logo-tile size-48" style={`background-color:${row.brandColor};`}>
+                  {row.casinoName.charAt(0)}
+                </div>
+                <div>
+                  <div class="bs-name">{row.casinoName}</div>
+                  <div class="bs-rank">#{row.rank} by 30d volume</div>
+                </div>
+              </div>
+              <div class="bs-share">{row.marketShare.toFixed(2)}%</div>
+              <div class="bs-vol">${(row.depositVolume / 1_000_000).toFixed(1)}M</div>
+              <div class="bs-bar" aria-hidden="true">
+                <span style={`width:${row.marketShare}%;background:${row.brandColor};`} />
+              </div>
+              <div class={row.depositChange >= 0 ? 'bs-trend up' : 'bs-trend down'}>
+                {row.depositChange >= 0 ? '+' : ''}{row.depositChange.toFixed(2)}% 30d
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <AnalyticsTable />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="method-grid">
+        <div class="card">
+          <h3>Where the data comes from</h3>
+          <p>
+            We maintain a public, version-controlled ledger of operator wallets across
+            Bitcoin, Ethereum, Solana, Tron, BNB Chain, Lightning, Polygon and Base. New
+            wallets are added when an operator first announces them or after we detect
+            recurring transfers between known operator wallets.
+          </p>
+        </div>
+        <div class="card">
+          <h3>How we count a deposit</h3>
+          <p>
+            A deposit is any inbound transaction to a tagged operator wallet from an
+            unknown counterparty. We exclude internal treasury rebalances and
+            withdrawals that are returned within five blocks. Stablecoin deposits are
+            converted to USD at the spot price at block time.
+          </p>
+        </div>
+        <div class="card">
+          <h3>What we do not capture</h3>
+          <p>
+            Off-chain deposits (credit cards, regional gateways, fiat ramps that hold
+            user balances) are not indexed. For Stake, Roobet and other operators that
+            now process a meaningful share of volume off-chain, our numbers are a
+            lower bound on total revenue.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Audit and corrections</h3>
+          <p>
+            We publish the full wallet ledger on the
+            <a href="/transparency/">transparency page</a>. If you believe a wallet is
+            misattributed, email <code>data@fairledger.io</code> with a counter-example
+            transaction and we will reconcile within 48 hours.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .bigshare {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media (min-width: 720px) {
+    .bigshare {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .bigshare-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .bigshare-head {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .bs-name {
+    font-weight: 700;
+    color: #fff;
+    font-size: 17px;
+  }
+  .bs-rank {
+    color: var(--color-text-muted);
+    font-size: 12px;
+  }
+  .bs-share {
+    font-size: 38px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+  .bs-vol {
+    color: var(--color-text-muted);
+    font-size: 14px;
+  }
+  .bs-bar {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .bs-bar span {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+  }
+  .bs-trend {
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .bs-trend.up {
+    color: var(--color-success);
+  }
+  .bs-trend.down {
+    color: var(--color-danger);
+  }
+
+  .method-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media (min-width: 720px) {
+    .method-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  .method-grid h3 {
+    font-size: 17px;
+    margin-bottom: 8px;
+  }
+  .method-grid p {
+    font-size: 14px;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+  .method-grid a {
+    color: var(--color-primary-soft);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .method-grid code {
+    font-family: var(--font-mono);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.92em;
+  }
+</style>

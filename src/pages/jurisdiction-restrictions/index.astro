@@ -1,0 +1,73 @@
+---
+import LegalLayout from '~/layouts/LegalLayout.astro';
+import { BRAND_NAME } from '~/data/site';
+
+const restrictions = [
+  { country: 'United States', status: 'Restricted', note: 'Most operators we cover do not accept US players. Stake.us is a separate sweepstakes-only product.' },
+  { country: 'United Kingdom', status: 'Restricted', note: 'UKGC requires a licence to advertise to UK players. Most crypto casinos hold an offshore licence and cannot accept UK accounts.' },
+  { country: 'France', status: 'Restricted', note: 'ANJ-licensed operators only. Crypto casinos are blocked at the DNS level by French ISPs.' },
+  { country: 'Australia', status: 'Restricted', note: 'Interactive Gambling Act 2001 bans most online casino services for Australian residents.' },
+  { country: 'Spain', status: 'Restricted', note: 'DGOJ licence required. Crypto casinos cannot lawfully accept Spanish accounts.' },
+  { country: 'Netherlands', status: 'Restricted', note: 'KSA enforcement against unlicensed operators since October 2021.' },
+  { country: 'Germany', status: 'Permitted with caution', note: 'Operators with a Schleswig-Holstein or GGL licence may accept some games.' },
+  { country: 'Canada', status: 'Permitted (province dependent)', note: 'Provincial regulators (AGCO, BCLC, ALC) operate parallel licensed offerings.' },
+  { country: 'Brazil', status: 'Permitted', note: 'Lei nº 14,790 / 2023 created a new licensing regime; offshore brands operate while applications are processed.' },
+  { country: 'Japan', status: 'Restricted', note: 'Most forms of online casino gambling are illegal under Japanese criminal code.' },
+  { country: 'India', status: 'Permitted (state dependent)', note: 'States such as Goa, Sikkim and Daman permit; states such as Tamil Nadu and Andhra Pradesh prohibit.' },
+  { country: 'Most of EU and EEA', status: 'Permitted with caution', note: 'Some operators geo-block specific EU members or limit currency. Check on signup.' },
+];
+---
+
+<LegalLayout routeKey="jurisdictionRestrictions">
+  <p>
+    Crypto casinos are not legal everywhere, and even where they are legal,
+    individual operators may decline to accept your country. Below is a
+    snapshot of where the operators {BRAND_NAME} covers do and do not generally
+    accept players. This is not legal advice - the legal status of online
+    gambling in your jurisdiction is your responsibility.
+  </p>
+
+  <h2>Country-by-country snapshot</h2>
+  <div class="data-table-wrap" style="margin:18px 0 30px;">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Country</th>
+          <th>Typical status</th>
+          <th>Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          restrictions.map((r) => (
+            <tr>
+              <td><strong style="color:#fff;">{r.country}</strong></td>
+              <td>
+                {r.status === 'Restricted' && <span class="badge badge-danger">{r.status}</span>}
+                {r.status === 'Permitted' && <span class="badge badge-success">{r.status}</span>}
+                {r.status.startsWith('Permitted') && r.status !== 'Permitted' && (
+                  <span class="badge badge-warning">{r.status}</span>
+                )}
+              </td>
+              <td>{r.note}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <h2>How to check your country at any operator</h2>
+  <ol>
+    <li>Read the operator's terms of service - the restricted-territory list is usually at the bottom.</li>
+    <li>Try to deposit. Operators block restricted countries at signup, not after the deposit clears.</li>
+    <li>If a VPN is required to access an operator, your account will likely be closed without a withdrawal at first KYC. Do not gamble with money you cannot afford to lose to a closed account.</li>
+  </ol>
+
+  <h2>Always do this</h2>
+  <ul>
+    <li>Read the local statute - "online gambling" can mean different things in different places.</li>
+    <li>Check if your bank or card issuer blocks gambling merchants. Many UK and EU banks do.</li>
+    <li>If unsure, consult a local lawyer.</li>
+  </ul>
+</LegalLayout>

@@ -1,0 +1,246 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import { casinos } from '~/data/casinos';
+
+const supportedCasinos = casinos.slice(0, 8);
+---
+
+<BaseLayout routeKey="seedAnalyzer">
+  <PageHero
+    eyebrow="Provably fair"
+    title="Seed analyzer"
+    subtitle="Drop in a server seed, client seed and nonce. We rebuild the SHA256 chain locally in your browser and tell you exactly what the round should have rolled."
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="seed-grid">
+        <form class="seed-form card" onsubmit="return false">
+          <div class="form-group">
+            <label for="casino">Casino</label>
+            <select id="casino">
+              {supportedCasinos.map((c) => <option value={c.slug}>{c.name}</option>)}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="game">Game</label>
+            <select id="game">
+              <option>Dice</option>
+              <option>Limbo</option>
+              <option>Crash</option>
+              <option>Plinko</option>
+              <option>Mines</option>
+              <option>Roulette</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="server-seed">Unhashed server seed</label>
+            <input id="server-seed" type="text" placeholder="hex (64 chars)" autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <label for="client-seed">Client seed</label>
+            <input id="client-seed" type="text" placeholder="alphanumeric, casino-supplied" autocomplete="off" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nonce">Nonce</label>
+              <input id="nonce" type="number" min="0" placeholder="0" />
+            </div>
+            <div class="form-group">
+              <label for="cursor">Cursor</label>
+              <input id="cursor" type="number" min="0" placeholder="0" />
+            </div>
+          </div>
+          <button class="btn btn-primary btn-lg" type="button">Verify round</button>
+          <p class="seed-hint">
+            Verification runs entirely in your browser. We never see your seeds.
+          </p>
+        </form>
+
+        <aside class="card seed-side">
+          <h3>What this proves</h3>
+          <ol class="seed-steps">
+            <li>
+              <strong>SHA256 your unhashed server seed.</strong> The result must equal
+              the hashed seed the casino published before your round started.
+            </li>
+            <li>
+              <strong>Concatenate</strong> your client seed, nonce and cursor with the
+              server seed. HMAC-SHA256 the combined string.
+            </li>
+            <li>
+              <strong>Take the first 8 bytes</strong> of the HMAC, normalise to a
+              fraction in [0, 1), and feed into the game-specific math.
+            </li>
+            <li>
+              <strong>The output is your roll.</strong> If it matches the screenshot
+              of the round, the casino did not see your bet before settling it.
+            </li>
+          </ol>
+          <a href="/provably-fair/" class="btn btn-secondary btn-sm">Read the long version</a>
+        </aside>
+      </div>
+
+      <div class="supported-list">
+        <h2 class="supported-title">Supported casinos</h2>
+        <div class="supported-grid">
+          {
+            supportedCasinos.map((c) => (
+              <div class="supp-card">
+                <div class="logo-tile size-40" style={`background-color:${c.brandColor};`}>
+                  {c.logoInitials}
+                </div>
+                <div class="supp-meta">
+                  <div class="supp-name">{c.name}</div>
+                  <div class="supp-tag">SHA256 verified</div>
+                </div>
+                <span class="badge badge-success">
+                  <span class="dot" style="background:#34d399;"></span>
+                  Live
+                </span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .seed-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 22px;
+    margin-bottom: 56px;
+  }
+  @media (min-width: 900px) {
+    .seed-grid {
+      grid-template-columns: 1.1fr 1fr;
+    }
+  }
+  .seed-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .form-group input,
+  .form-group select {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--color-border);
+    color: #fff;
+    padding: 11px 14px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    transition: border-color 0.15s ease;
+  }
+  .form-group input:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background: rgba(124, 58, 237, 0.06);
+  }
+  .seed-hint {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-align: center;
+    margin-top: -2px;
+  }
+  .seed-side h3 {
+    font-size: 17px;
+    margin-bottom: 14px;
+  }
+  .seed-steps {
+    counter-reset: step;
+    display: grid;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .seed-steps li {
+    counter-increment: step;
+    padding-left: 38px;
+    position: relative;
+    font-size: 14px;
+    color: var(--color-text-soft);
+    line-height: 1.6;
+  }
+  .seed-steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: -2px;
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    background: rgba(124, 58, 237, 0.18);
+    color: var(--color-primary-soft);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .seed-steps strong {
+    color: #fff;
+  }
+  .supported-title {
+    font-size: 22px;
+    margin-bottom: 18px;
+  }
+  .supported-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  @media (min-width: 720px) {
+    .supported-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .supported-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .supp-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+  }
+  .supp-meta {
+    flex: 1;
+    min-width: 0;
+  }
+  .supp-name {
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .supp-tag {
+    color: var(--color-text-muted);
+    font-size: 11.5px;
+  }
+</style>

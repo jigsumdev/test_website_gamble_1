@@ -1,0 +1,29 @@
+---
+import '~/styles/global.css';
+import SeoHead from '~/components/SeoHead.astro';
+import Header from '~/components/Header.astro';
+import Footer from '~/components/Footer.astro';
+import type { RouteKey } from '~/data/site';
+
+interface Props {
+  routeKey: RouteKey;
+  title?: string;
+  description?: string;
+}
+const { routeKey, title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <SeoHead routeKey={routeKey} title={title} description={description} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <Header routeKey={routeKey} />
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

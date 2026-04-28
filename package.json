@@ -1,0 +1,25 @@
+{
+  "name": "fairledger",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "FairLedger - Crypto Casino Transparency and Rewards",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build && node scripts/postbuild.mjs",
+    "preview": "astro preview",
+    "check": "astro check",
+    "start": "astro dev"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "@fontsource/inter": "^5.1.0",
+    "astro": "^5.1.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "typescript": "^5.7.2"
+  }
+}

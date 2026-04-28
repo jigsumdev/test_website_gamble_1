@@ -1,0 +1,64 @@
+---
+import LegalLayout from '~/layouts/LegalLayout.astro';
+import { BRAND_NAME } from '~/data/site';
+---
+
+<LegalLayout routeKey="cookies">
+  <p>
+    {BRAND_NAME} uses the minimum number of cookies needed to deliver the site.
+    We do <strong>not</strong> use any third-party advertising, retargeting or
+    analytics cookies.
+  </p>
+
+  <h2>1. Cookies we set</h2>
+  <h3>Strictly necessary</h3>
+  <ul>
+    <li>
+      <strong>__cf_bm</strong> - Cloudflare bot management, set on every request.
+      Expires after 30 minutes. Cannot be disabled while using the site.
+    </li>
+    <li>
+      <strong>fl_session</strong> - signed session token if you sign in to the
+      wager-share dashboard. Expires when the browser closes.
+    </li>
+  </ul>
+
+  <h3>Functional (only if you opt in)</h3>
+  <ul>
+    <li>
+      <strong>fl_theme</strong> - remembers if you switched to light mode.
+      Expires after 12 months. Set only if you change the theme.
+    </li>
+    <li>
+      <strong>fl_locale</strong> - remembers your language choice. Expires after
+      12 months.
+    </li>
+  </ul>
+
+  <h2>2. Local storage</h2>
+  <p>
+    We may store unsigned key-value pairs in your browser's localStorage to
+    remember which casino filter you selected, which odds format you prefer and
+    similar UI preferences. These never leave your browser.
+  </p>
+
+  <h2>3. Disabling cookies</h2>
+  <p>
+    You can block all cookies in your browser settings. The site will still load
+    but the wager-share dashboard, theme switcher and saved filters will reset on
+    every visit.
+  </p>
+
+  <h2>4. Third-party cookies</h2>
+  <p>
+    No third-party cookies are loaded by the {BRAND_NAME} domain. If you click
+    out to an operator (Stake, Roobet, Rainbet, etc.) they will set their own
+    cookies under their own domain - their privacy policies apply, not ours.
+  </p>
+
+  <h2>5. Do Not Track</h2>
+  <p>
+    We respect the DNT browser signal. If your browser sends DNT, we omit even
+    the optional functional cookies above.
+  </p>
+</LegalLayout>

@@ -1,0 +1,17 @@
+{
+  "name": "FairLedger - Crypto Casino Transparency",
+  "short_name": "FairLedger",
+  "description": "Real-time on-chain analytics, honest reviews and verified bonus codes for crypto casinos.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B0F1E",
+  "theme_color": "#0B0F1E",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    }
+  ]
+}

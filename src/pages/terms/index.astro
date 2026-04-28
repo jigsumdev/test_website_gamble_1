@@ -1,0 +1,96 @@
+---
+import LegalLayout from '~/layouts/LegalLayout.astro';
+import { BRAND_NAME, BRAND_LEGAL_NAME, CONTACT_EMAIL } from '~/data/site';
+---
+
+<LegalLayout routeKey="terms">
+  <p>
+    These Terms govern your use of fairledger.io and any associated tools or
+    APIs operated by {BRAND_LEGAL_NAME}. By using the site you agree to them.
+    If you do not agree, do not use the site.
+  </p>
+
+  <h2>1. Eligibility</h2>
+  <p>
+    You must be at least 18 years old (or 21 in jurisdictions where the local
+    minimum gambling age is higher) to use {BRAND_NAME}. You confirm that
+    accessing the site is legal where you live.
+  </p>
+
+  <h2>2. What we are not</h2>
+  <p>
+    {BRAND_NAME} is a publisher and a tool maker. We are <strong>not</strong> a
+    casino, a sportsbook, a payment processor, a wallet or a financial advisor.
+    Nothing on this site is gambling advice, financial advice, legal advice or
+    a solicitation to gamble.
+  </p>
+
+  <h2>3. Affiliate links</h2>
+  <p>
+    Most outbound links to operators are affiliate links. When you sign up via
+    one of these links the operator pays us a share of their net gaming revenue
+    from your account. This relationship is disclosed on every link with the
+    rel="sponsored" attribute and on our <a href="/disclaimer/">disclosure page</a>.
+  </p>
+
+  <h2>4. Wager-share program</h2>
+  <p>
+    Wager-share is a discretionary loyalty program. We pay between 50% and 100%
+    of the affiliate revenue an operator pays us back to the user who generated
+    it. Eligibility, payout schedule and excluded games are listed on the
+    <a href="/leaderboard/">leaderboard</a> page. We may pause, suspend or
+    terminate the program for fraud, abuse, multi-accounting or operator
+    chargebacks.
+  </p>
+
+  <h2>5. User-submitted content</h2>
+  <p>
+    If you submit a casino dispute, a data correction or a comment, you grant
+    {BRAND_NAME} a worldwide, non-exclusive, royalty-free licence to publish it
+    in our editorial content. You confirm the submission is accurate and does
+    not infringe a third party's rights.
+  </p>
+
+  <h2>6. Intellectual property</h2>
+  <p>
+    All site copy, logo, ranking algorithm and on-chain dataset are the property
+    of {BRAND_LEGAL_NAME}. The wallet ledger and ranking-algorithm source code
+    are released under the MIT licence on our public GitHub. Site copy is
+    released under CC-BY-4.0 with attribution to {BRAND_NAME}.
+  </p>
+
+  <h2>7. Disclaimer of warranties</h2>
+  <p>
+    The site is provided "as is" without warranty of any kind. While we work
+    hard to keep our deposit-volume figures, bonus codes and review scores
+    accurate, we do not warrant that any number on the site is current or
+    error-free. Always verify with the operator before depositing.
+  </p>
+
+  <h2>8. Limitation of liability</h2>
+  <p>
+    To the maximum extent permitted by law, {BRAND_LEGAL_NAME} shall not be
+    liable for any indirect, incidental, special, consequential or punitive
+    damages arising from your use of the site, including any losses you incur
+    by gambling at an operator we cover. Our total liability for any direct
+    losses is limited to GBP 100.
+  </p>
+
+  <h2>9. Termination</h2>
+  <p>
+    We may suspend access to the site for any user found to be scraping at
+    abusive rates, automating the wager-share dashboard or attempting to harm
+    the service.
+  </p>
+
+  <h2>10. Governing law</h2>
+  <p>
+    These Terms are governed by the laws of England and Wales. Any dispute
+    shall be resolved exclusively in the courts of England.
+  </p>
+
+  <h2>11. Contact</h2>
+  <p>
+    For any question about these Terms, email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+  </p>
+</LegalLayout>

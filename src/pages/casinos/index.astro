@@ -1,0 +1,94 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import CasinoGrid from '~/components/CasinoGrid.astro';
+import { casinos } from '~/data/casinos';
+---
+
+<BaseLayout routeKey="casinos">
+  <PageHero
+    eyebrow="Operators we cover"
+    title="Top crypto casinos, ranked by independent score"
+    subtitle="Every casino on this page processes withdrawals on at least one major chain, holds a recognised gaming license and has been audited by FairLedger within the last 90 days."
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="filter-bar">
+        <div class="filter-tabs" role="tablist" aria-label="Filter casinos">
+          <button class="filter-tab active" role="tab" aria-selected="true">All ({casinos.length})</button>
+          <button class="filter-tab" role="tab">Sportsbook</button>
+          <button class="filter-tab" role="tab">VPN-friendly</button>
+          <button class="filter-tab" role="tab">High rakeback</button>
+          <button class="filter-tab" role="tab">No KYC</button>
+          <button class="filter-tab" role="tab">Originals</button>
+        </div>
+        <div class="filter-sort">
+          <label for="sort">Sort by</label>
+          <select id="sort">
+            <option>Independent score</option>
+            <option>Deposit volume (30d)</option>
+            <option>Rakeback %</option>
+            <option>Newest</option>
+          </select>
+        </div>
+      </div>
+
+      <CasinoGrid limit={casinos.length} />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .filter-tabs {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .filter-tab {
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.15s ease;
+  }
+  .filter-tab:hover {
+    color: #fff;
+    border-color: var(--color-primary);
+  }
+  .filter-tab.active {
+    background: rgba(124, 58, 237, 0.16);
+    color: #fff;
+    border-color: var(--color-primary);
+  }
+  .filter-sort {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--color-text-muted);
+  }
+  .filter-sort select {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    cursor: pointer;
+  }
+</style>

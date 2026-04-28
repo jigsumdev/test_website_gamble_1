@@ -1,0 +1,116 @@
+---
+import { totalDepositVolume30d, totalDeposits30d, totalUniqueDepositors30d, casinos } from '~/data/casinos';
+
+function fmtUsd(n: number) {
+  if (n >= 1_000_000_000) return `$${(n / 1_000_000_000).toFixed(2)}B`;
+  if (n >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1_000) return `$${(n / 1_000).toFixed(1)}K`;
+  return `$${n.toLocaleString()}`;
+}
+function fmtN(n: number) {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(2)}M`;
+  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K`;
+  return n.toLocaleString();
+}
+
+const stats = [
+  { label: '30-day deposit volume', value: fmtUsd(totalDepositVolume30d), trend: '+8.3%', positive: true },
+  { label: 'Unique depositors', value: fmtN(totalUniqueDepositors30d), trend: '+11.2%', positive: true },
+  { label: 'Total deposits', value: fmtN(totalDeposits30d), trend: '+5.6%', positive: true },
+  { label: 'Casinos tracked', value: casinos.length.toString(), trend: 'Live', positive: true },
+];
+---
+
+<section class="stat-strip">
+  <div class="container">
+    <div class="stat-grid">
+      {
+        stats.map((s) => (
+          <div class="stat-card">
+            <div class="stat-label">{s.label}</div>
+            <div class="stat-value">{s.value}</div>
+            <div class:list={['stat-trend', { positive: s.positive }]}>
+              <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
+                <path d="M2 6.5 5 3 8 6.5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              {s.trend}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .stat-strip {
+    margin-top: -28px;
+    position: relative;
+    z-index: 5;
+  }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 6px;
+    box-shadow: var(--shadow-lg);
+  }
+  @media (min-width: 720px) {
+    .stat-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .stat-card {
+    padding: 18px 20px;
+    border-radius: var(--radius);
+    transition: background 0.15s ease;
+    position: relative;
+  }
+  .stat-card + .stat-card::before {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: 25%;
+    bottom: 25%;
+    width: 1px;
+    background: var(--color-border-soft);
+  }
+  @media (max-width: 719px) {
+    .stat-card + .stat-card::before {
+      display: none;
+    }
+  }
+  .stat-card:hover {
+    background: rgba(124, 58, 237, 0.06);
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .stat-value {
+    font-size: 26px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-trend {
+    margin-top: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+  }
+  .stat-trend.positive {
+    color: var(--color-success);
+  }
+</style>

@@ -1,0 +1,228 @@
+---
+import Logo from './Logo.astro';
+import {
+  footerColumns,
+  socialLinks,
+  BRAND_NAME,
+  BRAND_LEGAL_NAME,
+  BRAND_TAGLINE,
+} from '~/data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <Logo />
+        <p class="footer-tagline">{BRAND_TAGLINE}.</p>
+        <p class="footer-tagline-small">
+          Independent on-chain analytics, honest reviews and verified bonus codes
+          for every major crypto casino.
+        </p>
+        <div class="social-row" aria-label="Social media">
+          <a href={socialLinks.x} class="social-link" aria-label="Follow us on X" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M11.07 1.5h2.4l-5.24 6 6.16 8H10l-4.31-5.65L1.04 15.5H0l5.6-6.4L0 1.5h4.95l3.9 5.16L11.07 1.5Zm-.42 12.06h1.33L4.5 2.86H3.07l7.58 10.7Z"
+              />
+            </svg>
+          </a>
+          <a href={socialLinks.discord} class="social-link" aria-label="Join our Discord" target="_blank" rel="noopener noreferrer">
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M19.27 5.33A18 18 0 0 0 14.85 4l-.21.41a16.4 16.4 0 0 0-5.27 0L9.16 4A18 18 0 0 0 4.74 5.33C2.07 9.5 1.34 13.55 1.7 17.55a18 18 0 0 0 5.49 2.78l1.1-1.5a11.5 11.5 0 0 1-1.85-.9c.16-.11.31-.23.46-.34a13.1 13.1 0 0 0 11.21 0c.15.11.3.23.46.34a11.5 11.5 0 0 1-1.86.9l1.1 1.5a18 18 0 0 0 5.5-2.78c.4-4.7-.51-8.7-3.04-12.22ZM8.83 14.85c-1.04 0-1.9-.96-1.9-2.13 0-1.18.84-2.14 1.9-2.14 1.06 0 1.92.96 1.9 2.14 0 1.17-.84 2.13-1.9 2.13Zm6.34 0c-1.04 0-1.9-.96-1.9-2.13 0-1.18.84-2.14 1.9-2.14 1.06 0 1.92.96 1.9 2.14 0 1.17-.84 2.13-1.9 2.13Z"
+              />
+            </svg>
+          </a>
+          <a href={socialLinks.telegram} class="social-link" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="currentColor" d="M21.5 3.5 2.6 11c-1.4.5-1.4 1.4-.3 1.7l4.7 1.4 1.8 5.7c.2.6.4.8.9.8.5 0 .7-.2 1-.5l2.4-2.3 4.8 3.5c.9.5 1.5.2 1.7-.8L23 5c.3-1.3-.5-1.9-1.5-1.5ZM9.7 14.7l-.4 4.6 2.7-2.6 7.5-6.7c.4-.3 0-.5-.5-.2L9.7 14.7Z" />
+            </svg>
+          </a>
+          <a href={socialLinks.youtube} class="social-link" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="currentColor" d="M22.5 6.6a2.7 2.7 0 0 0-1.9-1.9C18.9 4.2 12 4.2 12 4.2s-6.9 0-8.6.5A2.7 2.7 0 0 0 1.5 6.6 28 28 0 0 0 1 12c0 1.8.2 3.6.5 5.4a2.7 2.7 0 0 0 1.9 1.9c1.7.5 8.6.5 8.6.5s6.9 0 8.6-.5a2.7 2.7 0 0 0 1.9-1.9c.3-1.8.5-3.6.5-5.4 0-1.8-.2-3.6-.5-5.4ZM10 15.3V8.7l5.6 3.3L10 15.3Z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-cols">
+        {
+          footerColumns.map((col) => (
+            <div class="footer-col">
+              <h4>{col.heading}</h4>
+              <ul>
+                {col.links.map((link) => (
+                  <li>
+                    <a href={link.href}>{link.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="footer-eighteen">
+      <div class="badge-18">18+</div>
+      <p>
+        Gambling can be addictive. Play responsibly. {BRAND_NAME} is for adults aged 18 and over only
+        (21+ in some jurisdictions). If gambling is becoming a problem, free confidential help is
+        available 24/7 at <a href="https://www.begambleaware.org/" rel="noopener noreferrer" target="_blank">BeGambleAware.org</a> or call the
+        National Gambling Helpline on <strong>0808 8020 133</strong> (UK).
+      </p>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="copyright">
+        &copy; {year} {BRAND_LEGAL_NAME}. All rights reserved. {BRAND_NAME} is an independent
+        editorial site. Some links to operators are affiliate links - see our
+        <a href="/disclaimer/">affiliate disclosure</a>.
+      </p>
+      <p class="legal-note">
+        FairLedger does not host any gambling activity. We are a comparison and analytics
+        publisher. Always check that gambling is legal in your jurisdiction before participating.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding-bottom: 40px;
+  }
+  @media (min-width: 900px) {
+    .footer-top {
+      grid-template-columns: 320px 1fr;
+      gap: 64px;
+    }
+  }
+  .footer-brand {
+    max-width: 360px;
+  }
+  .footer-tagline {
+    margin-top: 16px;
+    color: var(--color-text-soft);
+    font-weight: 500;
+  }
+  .footer-tagline-small {
+    margin-top: 8px;
+    color: var(--color-text-muted);
+    font-size: 13.5px;
+  }
+  .social-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 18px;
+  }
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--color-surface-hi);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-soft);
+    transition: all 0.15s ease;
+  }
+  .social-link:hover {
+    color: #fff;
+    background: rgba(124, 58, 237, 0.18);
+    border-color: var(--color-primary);
+  }
+  .footer-cols {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+  @media (min-width: 720px) {
+    .footer-cols {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .footer-col h4 {
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    margin-bottom: 14px;
+  }
+  .footer-col ul {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  .footer-col a {
+    color: var(--color-text-muted);
+    font-size: 14px;
+    transition: color 0.15s ease;
+  }
+  .footer-col a:hover {
+    color: #fff;
+  }
+  .footer-eighteen {
+    display: flex;
+    gap: 16px;
+    padding: 18px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: rgba(244, 63, 94, 0.05);
+    align-items: flex-start;
+    margin-bottom: 28px;
+  }
+  .footer-eighteen p {
+    font-size: 13px;
+    color: var(--color-text-muted);
+  }
+  .footer-eighteen p a {
+    color: var(--color-primary-soft);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .footer-eighteen p strong {
+    color: #fff;
+  }
+  .badge-18 {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f43f5e 0%, #be123c 100%);
+    border-radius: 50%;
+    font-weight: 800;
+    font-size: 14px;
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+  }
+  .footer-bottom {
+    border-top: 1px solid var(--color-border);
+    padding-top: 22px;
+    color: var(--color-text-muted);
+    font-size: 12.5px;
+  }
+  .footer-bottom a {
+    color: var(--color-primary-soft);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .copyright {
+    margin-bottom: 8px;
+  }
+  .legal-note {
+    color: var(--color-text-dim);
+  }
+</style>

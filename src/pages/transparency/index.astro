@@ -1,0 +1,206 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+
+const wallets = [
+  { casino: 'Stake', chain: 'Bitcoin', address: 'bc1qxy2...lc0u3', tagged: '2024-09-12' },
+  { casino: 'Stake', chain: 'Ethereum', address: '0x974...7Bb1', tagged: '2024-09-12' },
+  { casino: 'Roobet', chain: 'Litecoin', address: 'ltc1qkk2...sxw9', tagged: '2024-10-04' },
+  { casino: 'Rainbet', chain: 'Solana', address: '4nfL...fHTr', tagged: '2025-01-22' },
+  { casino: 'Shuffle', chain: 'Solana', address: 'D1Bs...K2pP', tagged: '2025-03-08' },
+  { casino: 'BC.Game', chain: 'Tron', address: 'TFsa...QkV9', tagged: '2024-08-19' },
+  { casino: 'Gamdom', chain: 'Bitcoin', address: 'bc1qep4...mr8q', tagged: '2024-10-30' },
+  { casino: 'Cloudbet', chain: 'Bitcoin', address: 'bc1qx70...vqz2', tagged: '2024-07-11' },
+];
+---
+
+<BaseLayout routeKey="transparency">
+  <PageHero
+    eyebrow="How we work"
+    title="Transparency report"
+    subtitle="Methodology, ranking algorithm, on-chain data sources and complete affiliate disclosure. Everything FairLedger publishes, you can audit."
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="t-grid">
+        <article class="card">
+          <h2>Editorial firewall</h2>
+          <p>
+            FairLedger is published by FairLedger Insights Ltd., a UK private limited
+            company. Our editorial team has no equity in any covered operator, and no
+            operator has the ability to commission, edit or veto a review. The
+            commercial team negotiates affiliate commissions and bonus codes
+            <strong>after</strong> a casino is approved by editorial - not before.
+          </p>
+        </article>
+
+        <article class="card">
+          <h2>Ranking algorithm</h2>
+          <p>
+            The Independent Score on every review is a weighted average of five
+            inputs:
+          </p>
+          <ul class="t-list">
+            <li><strong>30%</strong> withdrawal speed (median, last 90 days)</li>
+            <li><strong>25%</strong> licence and dispute history</li>
+            <li><strong>20%</strong> game library and Original audit results</li>
+            <li><strong>15%</strong> bonus value (after wagering)</li>
+            <li><strong>10%</strong> support quality (live tested every quarter)</li>
+          </ul>
+          <p>
+            Affiliate commission rates are <strong>not</strong> in the formula.
+          </p>
+        </article>
+
+        <article class="card">
+          <h2>Affiliate disclosure</h2>
+          <p>
+            Most outbound links to operators are affiliate links. When you sign up via
+            FairLedger, the casino pays us a percentage of their gross gaming revenue
+            from your account. We pass between 50% and 100% of that revenue back to
+            you as wager-share rewards, paid every Sunday at 23:59 UTC in BTC, USDT or
+            USDC.
+          </p>
+          <p>
+            See the <a href="/disclaimer/">affiliate disclaimer</a> for the full text.
+          </p>
+        </article>
+
+        <article class="card">
+          <h2>Corrections policy</h2>
+          <p>
+            If you spot an error in a deposit volume figure, a withdrawal speed
+            number or a bonus term, email <code>data@fairledger.io</code> with a
+            counter-example transaction or screenshot. We reconcile within 48 hours
+            and stamp the correction with the date and editor who reviewed it.
+          </p>
+        </article>
+      </div>
+
+      <div class="wallet-section">
+        <h2 class="section-title">Tagged operator wallets (excerpt)</h2>
+        <p class="section-subtitle">
+          Eight of the 240+ wallets in our public ledger. Full ledger is updated
+          weekly and signed with our PGP key.
+        </p>
+
+        <div class="data-table-wrap" style="margin-top:22px;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Casino</th>
+                <th>Chain</th>
+                <th>Address (truncated)</th>
+                <th>First tagged</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                wallets.map((w) => (
+                  <tr>
+                    <td><strong style="color:#fff;">{w.casino}</strong></td>
+                    <td>{w.chain}</td>
+                    <td><code class="addr-cell">{w.address}</code></td>
+                    <td class="num-soft">{new Date(w.tagged).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="t-cta card">
+        <h2>Audit our work</h2>
+        <p>
+          Pull the full wallet ledger, ranking algorithm source code and editorial
+          standards from our public GitHub. Pull requests welcome.
+        </p>
+        <a class="btn btn-primary" href="https://github.com/fairledger" target="_blank" rel="noopener noreferrer">
+          GitHub
+          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+            <path d="M3 9 9 3m0 0H4m5 0v5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .t-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 56px;
+  }
+  @media (min-width: 720px) {
+    .t-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  .t-grid h2 {
+    font-size: 19px;
+    margin-bottom: 12px;
+  }
+  .t-grid p {
+    color: var(--color-text-soft);
+    font-size: 14.5px;
+    margin-bottom: 12px;
+    line-height: 1.6;
+  }
+  .t-grid p:last-child {
+    margin-bottom: 0;
+  }
+  .t-grid strong {
+    color: #fff;
+  }
+  .t-grid a {
+    color: var(--color-primary-soft);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .t-grid code {
+    font-family: var(--font-mono);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.92em;
+  }
+  .t-list {
+    display: grid;
+    gap: 6px;
+    padding-left: 20px;
+    margin-bottom: 12px;
+  }
+  .t-list li {
+    list-style: disc;
+    color: var(--color-text-soft);
+    font-size: 14px;
+  }
+  .wallet-section {
+    margin-bottom: 56px;
+  }
+  .addr-cell {
+    font-family: var(--font-mono);
+    color: var(--color-primary-soft);
+    background: rgba(124, 58, 237, 0.1);
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 12.5px;
+  }
+  .t-cta {
+    text-align: center;
+    padding: 36px;
+    background: linear-gradient(180deg, rgba(124, 58, 237, 0.08), transparent) var(--color-surface);
+  }
+  .t-cta h2 {
+    margin-bottom: 8px;
+  }
+  .t-cta p {
+    color: var(--color-text-muted);
+    margin-bottom: 22px;
+  }
+</style>

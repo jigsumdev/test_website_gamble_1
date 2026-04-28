@@ -1,0 +1,195 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import { blogPosts } from '~/data/casinos';
+
+const featured = blogPosts[0];
+const rest = blogPosts.slice(1);
+---
+
+<BaseLayout routeKey="blog">
+  <PageHero
+    eyebrow="The Ledger blog"
+    title="Long-form analysis, never a press release"
+    subtitle="Independent research, operator interviews and data-driven explainers from the FairLedger editorial desk."
+  />
+
+  {featured && (
+    <section class="section section-tight">
+      <div class="container">
+        <article class="featured card card-hover">
+          <div class="featured-tag">
+            <span class="badge">Featured</span>
+            <span class="badge badge-blue">{featured.category}</span>
+          </div>
+          <h2 class="featured-title">{featured.title}</h2>
+          <p class="featured-excerpt">{featured.excerpt}</p>
+          <div class="featured-meta">
+            <div class="author-tile">
+              <div class="lb-avatar">{featured.author.split(' ').map((p) => p[0]).join('')}</div>
+              <div>
+                <div class="author-name">{featured.author}</div>
+                <div class="author-meta">
+                  {new Date(featured.date).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                  })} · {featured.readMin} min read
+                </div>
+              </div>
+            </div>
+            <span class="btn btn-secondary btn-sm">Read article</span>
+          </div>
+        </article>
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="container">
+      <div class="blog-grid">
+        {
+          rest.map((p) => (
+            <article class="blog-card card card-hover">
+              <div class="blog-tags">
+                <span class="badge badge-blue">{p.category}</span>
+                <span class="text-muted blog-time">{p.readMin} min read</span>
+              </div>
+              <h3 class="blog-title">{p.title}</h3>
+              <p class="blog-excerpt">{p.excerpt}</p>
+              <div class="blog-foot">
+                <div class="author-tile">
+                  <div class="lb-avatar">{p.author.split(' ').map((s) => s[0]).join('')}</div>
+                  <div>
+                    <div class="author-name">{p.author}</div>
+                    <div class="author-meta">
+                      {new Date(p.date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                      })}
+                    </div>
+                  </div>
+                </div>
+                <span class="text-primary read-link">Read &rarr;</span>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .featured {
+    padding: 36px;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(20, 184, 166, 0.04)) var(--color-surface);
+    border-color: rgba(124, 58, 237, 0.32);
+  }
+  .featured-tag {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .featured-title {
+    font-size: clamp(24px, 3.5vw, 34px);
+    line-height: 1.1;
+    margin-bottom: 14px;
+    max-width: 800px;
+  }
+  .featured-excerpt {
+    font-size: 16px;
+    color: var(--color-text-soft);
+    margin-bottom: 24px;
+    max-width: 720px;
+  }
+  .featured-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .author-tile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .lb-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7c3aed, #14b8a6);
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .author-name {
+    color: #fff;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .author-meta {
+    color: var(--color-text-muted);
+    font-size: 12px;
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media (min-width: 720px) {
+    .blog-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .blog-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .blog-card {
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+  }
+  .blog-tags {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .blog-time {
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+  .blog-title {
+    font-size: 18px;
+    line-height: 1.25;
+    margin-bottom: 10px;
+  }
+  .blog-excerpt {
+    font-size: 14px;
+    color: var(--color-text-muted);
+    margin-bottom: 18px;
+    flex: 1;
+  }
+  .blog-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-border-soft);
+  }
+  .read-link {
+    font-size: 13px;
+    font-weight: 600;
+  }
+</style>

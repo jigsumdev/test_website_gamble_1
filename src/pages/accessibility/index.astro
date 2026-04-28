@@ -1,0 +1,49 @@
+---
+import LegalLayout from '~/layouts/LegalLayout.astro';
+import { BRAND_NAME, CONTACT_EMAIL } from '~/data/site';
+---
+
+<LegalLayout routeKey="accessibility">
+  <p>
+    {BRAND_NAME} targets <strong>WCAG 2.2 Level AA</strong> on every public
+    route. We test with axe-core, the latest VoiceOver, NVDA and JAWS, and a
+    keyboard-only operator on every release.
+  </p>
+
+  <h2>1. Our commitments</h2>
+  <ul>
+    <li>Every interactive element is reachable by Tab and operable by Enter / Space.</li>
+    <li>A skip-to-content link appears as the first focusable element.</li>
+    <li>Focus indicators are always visible and meet 3:1 contrast against the surrounding background.</li>
+    <li>All non-decorative images carry meaningful alt text.</li>
+    <li>Colour contrast ratios are at least 4.5:1 for body copy and 3:1 for large text.</li>
+    <li>Animation respects <code>prefers-reduced-motion</code>; large transforms stop on request.</li>
+    <li>Forms have visible labels, error states and helpful descriptions.</li>
+  </ul>
+
+  <h2>2. Known issues</h2>
+  <p>
+    We aim for zero known accessibility issues. If you find one, please report it -
+    we will fix it on the next deploy and credit you in the changelog.
+  </p>
+
+  <h2>3. Reporting a barrier</h2>
+  <p>
+    Email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> with the URL,
+    the device and assistive technology you were using, and a description of the
+    barrier. We respond within two business days.
+  </p>
+
+  <h2>4. Standards</h2>
+  <p>
+    This statement is based on the W3C Web Content Accessibility Guidelines
+    2.2. {BRAND_NAME} is also designed to comply with the EN 301 549 European
+    accessibility standard.
+  </p>
+
+  <h2>5. Statement preparation</h2>
+  <p>
+    This statement was last reviewed by an internal accessibility auditor on
+    the date shown above and tested against axe-core 4.10.
+  </p>
+</LegalLayout>

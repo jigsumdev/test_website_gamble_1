@@ -1,0 +1,298 @@
+---
+import { liveBonusCodes, casinos } from '~/data/casinos';
+
+const featuredCasinos = casinos.slice(0, 6);
+const codePreview = liveBonusCodes.slice(0, 3);
+---
+
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="badge badge-blue">
+        <span class="dot dot-pulse"></span>
+        Live on-chain data
+      </span>
+      <h1>
+        The transparency layer for <span class="grad">crypto casinos</span>.
+      </h1>
+      <p class="hero-sub">
+        FairLedger tracks every public deposit, audits every Original game and
+        verifies every bonus code in real time. Independent. Reader-funded.
+        Provably fair.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="/casinos/" class="btn btn-primary btn-lg">
+          Browse top casinos
+          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+            <path d="M3 7h8m-3-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+        <a href="/transparency/" class="btn btn-secondary btn-lg">How we score</a>
+      </div>
+
+      <ul class="hero-bullets" aria-label="Why FairLedger">
+        <li>
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M3 8.5 6.5 12 13 4.5" stroke="#A78BFA" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          Updated every 5 minutes from public chains
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M3 8.5 6.5 12 13 4.5" stroke="#A78BFA" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          12+ casinos covered, 60+ Originals audited
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M3 8.5 6.5 12 13 4.5" stroke="#A78BFA" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          Up to <strong>15% wager share</strong> via FairLedger codes
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M3 8.5 6.5 12 13 4.5" stroke="#A78BFA" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          Zero paid placements - rankings are algorithmic
+        </li>
+      </ul>
+    </div>
+
+    <aside class="hero-side" aria-label="Live data preview">
+      <div class="hero-card">
+        <div class="hero-card-head">
+          <div class="hero-card-title">
+            <span class="dot dot-pulse"></span>
+            Live bonus codes
+          </div>
+          <a href="/livecodes/" class="hero-card-link">View all</a>
+        </div>
+        <ul class="code-list">
+          {
+            codePreview.map((c) => (
+              <li class="code-row">
+                <div class="logo-tile size-32" style={`background-color:${c.brandColor};`}>
+                  {c.casinoName.charAt(0)}
+                </div>
+                <div class="code-meta">
+                  <div class="code-line1">
+                    <span class="code-casino">{c.casinoName}</span>
+                    <span class="code-time">{c.postedMinutesAgo}m ago</span>
+                  </div>
+                  <div class="code-reward">{c.reward}</div>
+                </div>
+                <code class="code-pill">{c.code}</code>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="hero-mini-grid">
+        {
+          featuredCasinos.map((c) => (
+            <a href={`/reviews/`} class="mini-tile" aria-label={`${c.name} review`}>
+              <div class="logo-tile size-40" style={`background-color:${c.brandColor};`}>
+                {c.logoInitials}
+              </div>
+              <div class="mini-name">{c.name}</div>
+              <div class="mini-rating">{c.rating.toFixed(1)} ★</div>
+            </a>
+          ))
+        }
+      </div>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: 64px 0 88px;
+    position: relative;
+    overflow: hidden;
+  }
+  @media (min-width: 1024px) {
+    .hero {
+      padding: 96px 0 120px;
+    }
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  @media (min-width: 1024px) {
+    .hero-grid {
+      grid-template-columns: 1.1fr 1fr;
+      gap: 72px;
+    }
+  }
+  .hero-copy h1 {
+    font-size: clamp(36px, 6vw, 60px);
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    margin: 18px 0 18px;
+  }
+  .grad {
+    background: linear-gradient(135deg, #c4b5fd 0%, #7c3aed 50%, #14b8a6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-sub {
+    font-size: 17px;
+    color: var(--color-text-muted);
+    max-width: 540px;
+    margin-bottom: 28px;
+  }
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .hero-bullets {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    font-size: 14.5px;
+    color: var(--color-text-soft);
+  }
+  @media (min-width: 540px) {
+    .hero-bullets {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .hero-bullets li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hero-bullets strong {
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .hero-side {
+    display: grid;
+    gap: 16px;
+  }
+  .hero-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    box-shadow: var(--shadow-lg);
+  }
+  .hero-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .hero-card-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #fff;
+  }
+  .hero-card-link {
+    font-size: 13px;
+    color: var(--color-primary-soft);
+    font-weight: 500;
+  }
+  .hero-card-link:hover {
+    color: #c4b5fd;
+  }
+  .code-list {
+    display: grid;
+    gap: 10px;
+  }
+  .code-row {
+    display: grid;
+    grid-template-columns: 32px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid var(--color-border-soft);
+    transition: all 0.15s ease;
+  }
+  .code-row:hover {
+    background: rgba(124, 58, 237, 0.08);
+    border-color: rgba(124, 58, 237, 0.4);
+  }
+  .code-meta {
+    min-width: 0;
+  }
+  .code-line1 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+  }
+  .code-casino {
+    font-weight: 600;
+    color: #fff;
+  }
+  .code-time {
+    color: var(--color-text-dim);
+    font-size: 11px;
+  }
+  .code-reward {
+    font-size: 12.5px;
+    color: var(--color-text-muted);
+    margin-top: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .code-pill {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    background: rgba(124, 58, 237, 0.18);
+    color: var(--color-primary-soft);
+    padding: 5px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(124, 58, 237, 0.32);
+    letter-spacing: 0.04em;
+  }
+
+  .hero-mini-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .mini-tile {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+    transition: all 0.15s ease;
+  }
+  .mini-tile:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+  }
+  .mini-name {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .mini-rating {
+    font-size: 11px;
+    color: var(--color-warning);
+    font-weight: 600;
+  }
+</style>

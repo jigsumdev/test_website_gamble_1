@@ -1,0 +1,66 @@
+---
+import LegalLayout from '~/layouts/LegalLayout.astro';
+import { BRAND_NAME } from '~/data/site';
+---
+
+<LegalLayout routeKey="disclaimer">
+  <p>
+    {BRAND_NAME} is independent, reader-supported and funded primarily through
+    affiliate commissions. This page sets out exactly how those commissions
+    work, so you can judge our recommendations on full information.
+  </p>
+
+  <h2>1. What "affiliate link" means</h2>
+  <p>
+    An affiliate link is an outbound link to an operator that contains a
+    referral identifier. When you click it, sign up and play, the operator pays
+    {BRAND_NAME} a percentage of the gross gaming revenue your account
+    generates - typically 25% to 50%, depending on the operator.
+  </p>
+
+  <h2>2. How it affects (or does not affect) coverage</h2>
+  <ul>
+    <li>
+      The Independent Score on every review is computed by an open-source
+      algorithm. Affiliate commission is <strong>not</strong> a variable.
+    </li>
+    <li>
+      Editorial decides which casinos to cover. Commercial then negotiates the
+      affiliate rate. The order is never reversed.
+    </li>
+    <li>
+      We have removed casinos from the directory after editorial issues even
+      when the affiliate rate was attractive.
+    </li>
+  </ul>
+
+  <h2>3. Our wager-share program</h2>
+  <p>
+    We pay between 50% and 100% of every dollar of affiliate commission back to
+    the user who generated it, as wager-share rewards. This is paid each Sunday
+    at 23:59 UTC in BTC, USDT or USDC. See the
+    <a href="/leaderboard/">leaderboard</a> page for terms.
+  </p>
+
+  <h2>4. What we never accept</h2>
+  <ul>
+    <li>Payment for a positive review.</li>
+    <li>Payment for top-ranking placement.</li>
+    <li>Equity, tokens or other ownership stakes in covered operators.</li>
+    <li>NDA-protected briefings that condition coverage on confidentiality.</li>
+  </ul>
+
+  <h2>5. Disclosure markers</h2>
+  <p>
+    Every affiliate link on the site has the
+    <code>rel="sponsored nofollow"</code> attribute, in compliance with the
+    UK ASA, US FTC and Google Webmaster guidelines.
+  </p>
+
+  <h2>6. Not financial or gambling advice</h2>
+  <p>
+    Nothing on {BRAND_NAME} is financial, legal or gambling advice. Gambling
+    involves risk of loss. Bonus values and odds change. Always read the
+    operator's terms before depositing.
+  </p>
+</LegalLayout>

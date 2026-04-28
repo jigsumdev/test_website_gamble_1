@@ -1,0 +1,240 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import { leaderboard } from '~/data/casinos';
+
+function fmtUsd(n: number) {
+  return `$${n.toLocaleString('en-US')}`;
+}
+
+const top3 = leaderboard.slice(0, 3);
+const rest = leaderboard.slice(3);
+---
+
+<BaseLayout routeKey="leaderboard">
+  <PageHero
+    eyebrow="Wager race"
+    title="Weekly leaderboard"
+    subtitle="$25,000 prize pool, paid every Sunday at 23:59 UTC. Wagering is automatically tracked when you play with code FAIRLEDGER on any covered casino."
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="lb-podium">
+        {
+          top3.map((p, idx) => (
+            <div class:list={['podium-card', `pos-${idx + 1}`]}>
+              <div class="podium-rank">#{p.rank}</div>
+              <div class="podium-avatar">{p.avatar}</div>
+              <div class="podium-name">{p.player}</div>
+              <div class="podium-casino">
+                <div class="logo-tile size-32" style={`background-color:${p.brandColor};`}>
+                  {p.casino.charAt(0)}
+                </div>
+                <span>{p.casino}</span>
+              </div>
+              <div class="podium-row">
+                <span class="podium-key">Wagered</span>
+                <span class="podium-val">{fmtUsd(p.wagered)}</span>
+              </div>
+              <div class="podium-row">
+                <span class="podium-key">Prize</span>
+                <span class="podium-val text-success">{fmtUsd(p.prize)}</span>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="data-table-wrap" style="margin-top:32px;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Player</th>
+              <th>Casino</th>
+              <th>Wagered</th>
+              <th>Prize</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              rest.map((p) => (
+                <tr>
+                  <td class="num-soft">{p.rank}</td>
+                  <td>
+                    <div class="lb-player">
+                      <div class="lb-avatar">{p.avatar}</div>
+                      <span>{p.player}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="lb-casino">
+                      <div class="logo-tile size-32" style={`background-color:${p.brandColor};`}>
+                        {p.casino.charAt(0)}
+                      </div>
+                      <span>{p.casino}</span>
+                    </div>
+                  </td>
+                  <td class="num">{fmtUsd(p.wagered)}</td>
+                  <td class="num text-success">{fmtUsd(p.prize)}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="lb-rules card">
+        <h3>Rules of the race</h3>
+        <ul>
+          <li>Open to any FairLedger user with a verified Discord account.</li>
+          <li>Wagering counted across every casino tagged with code <code>FAIRLEDGER</code>.</li>
+          <li>House-edge games (under 1% edge) and bonus-funded play do not count.</li>
+          <li>Prizes are paid in BTC, USDT or USDC within 24 hours of the race ending.</li>
+          <li>One entry per natural person - VPN abuse and multi-accounting forfeits prizes.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .lb-podium {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media (min-width: 720px) {
+    .lb-podium {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .podium-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 26px 22px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .podium-card.pos-1 {
+    border-color: rgba(245, 158, 11, 0.5);
+    background: linear-gradient(180deg, rgba(245, 158, 11, 0.12), transparent) var(--color-surface);
+  }
+  .podium-card.pos-2 {
+    border-color: rgba(156, 163, 194, 0.4);
+  }
+  .podium-card.pos-3 {
+    border-color: rgba(244, 63, 94, 0.35);
+  }
+  .podium-rank {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .podium-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    background: linear-gradient(135deg, #7c3aed, #14b8a6);
+    color: #fff;
+    font-weight: 800;
+    font-size: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--color-surface);
+    box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.3);
+  }
+  .podium-name {
+    font-family: var(--font-mono);
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .podium-casino {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-text-muted);
+    font-size: 13px;
+    margin-bottom: 18px;
+  }
+  .podium-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 13px;
+    border-top: 1px solid var(--color-border-soft);
+  }
+  .podium-key {
+    color: var(--color-text-muted);
+  }
+  .podium-val {
+    color: #fff;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .lb-player,
+  .lb-casino {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    font-weight: 500;
+  }
+  .lb-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7c3aed, #14b8a6);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lb-rules {
+    margin-top: 32px;
+    padding: 28px;
+  }
+  .lb-rules h3 {
+    margin-bottom: 14px;
+    font-size: 18px;
+  }
+  .lb-rules ul {
+    display: grid;
+    gap: 8px;
+  }
+  .lb-rules li {
+    color: var(--color-text-soft);
+    font-size: 14px;
+    padding-left: 22px;
+    position: relative;
+  }
+  .lb-rules li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-primary);
+  }
+  .lb-rules code {
+    font-family: var(--font-mono);
+    background: rgba(124, 58, 237, 0.16);
+    color: var(--color-primary-soft);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+</style>

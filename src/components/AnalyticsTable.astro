@@ -1,0 +1,132 @@
+---
+import { analytics30d } from '~/data/casinos';
+
+interface Props {
+  limit?: number;
+  showHeading?: boolean;
+}
+const { limit = 12, showHeading = true } = Astro.props;
+const rows = analytics30d.slice(0, limit);
+
+function fmtUsd(n: number) {
+  if (n >= 1_000_000_000) return `$${(n / 1_000_000_000).toFixed(2)}B`;
+  if (n >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1_000) return `$${(n / 1_000).toFixed(1)}K`;
+  return `$${n.toLocaleString()}`;
+}
+function fmtN(n: number) {
+  return n.toLocaleString('en-US');
+}
+function fmtPct(n: number) {
+  const sign = n > 0 ? '+' : '';
+  return `${sign}${n.toFixed(2)}%`;
+}
+
+const maxShare = Math.max(...rows.map((r) => r.marketShare));
+---
+
+{showHeading && (
+  <div class="table-head-row">
+    <div>
+      <span class="eyebrow">Live deposit analytics</span>
+      <h2 class="section-title">Last 30 days, on-chain</h2>
+      <p class="section-subtitle">
+        Aggregated from public blockchain transactions tagged to known operator
+        wallets. Refreshes every five minutes. No private API keys, no
+        operator-supplied data, no smoke and mirrors.
+      </p>
+    </div>
+    <a href="/analytics/" class="btn btn-secondary btn-sm">Full analytics</a>
+  </div>
+)}
+
+<div class="data-table-wrap">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Casino</th>
+        <th>Deposit volume</th>
+        <th>Share</th>
+        <th>30d change</th>
+        <th>Deposits</th>
+        <th>Unique</th>
+        <th>New</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        rows.map((r) => (
+          <tr>
+            <td class="num-soft">{r.rank}</td>
+            <td>
+              <div class="casino-cell">
+                <div
+                  class="logo-tile size-32"
+                  style={`background-color:${r.brandColor};`}
+                  aria-hidden="true"
+                >
+                  {r.casinoName.charAt(0)}
+                </div>
+                <span>{r.casinoName}</span>
+              </div>
+            </td>
+            <td class="num">{fmtUsd(r.depositVolume)}</td>
+            <td>
+              <div class="share-cell">
+                <div class="share-bar" aria-hidden="true">
+                  <span style={`width:${(r.marketShare / maxShare) * 100}%;`} />
+                </div>
+                <span class="num-soft">{r.marketShare.toFixed(2)}%</span>
+              </div>
+            </td>
+            <td class={r.depositChange >= 0 ? 'text-success num' : 'text-danger num'}>
+              {fmtPct(r.depositChange)}
+            </td>
+            <td class="num-soft">{fmtN(r.deposits)}</td>
+            <td class="num-soft">{fmtN(r.uniqueDepositors)}</td>
+            <td class="num-soft">{fmtN(r.newDepositors)}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .table-head-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .casino-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+  }
+  .share-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 130px;
+  }
+  .share-bar {
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .share-bar span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, #7c3aed, #a78bfa);
+    border-radius: 999px;
+  }
+</style>

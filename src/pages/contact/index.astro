@@ -1,0 +1,229 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import { CONTACT_EMAIL, SUPPORT_EMAIL, socialLinks } from '~/data/site';
+---
+
+<BaseLayout routeKey="contact">
+  <PageHero
+    eyebrow="Get in touch"
+    title="Contact FairLedger"
+    subtitle="Press, partnerships, data corrections and reader questions. We reply within one business day."
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="contact-grid">
+        <form
+          class="contact-form card"
+          action={`mailto:${CONTACT_EMAIL}`}
+          method="POST"
+          enctype="text/plain"
+        >
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Your name</label>
+              <input id="name" name="name" type="text" required autocomplete="name" />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" required autocomplete="email" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="topic">Topic</label>
+            <select id="topic" name="topic">
+              <option>General question</option>
+              <option>Data correction</option>
+              <option>Press inquiry</option>
+              <option>Partnership / affiliate</option>
+              <option>Bug report</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="6" required placeholder="Tell us what you need."></textarea>
+          </div>
+          <button class="btn btn-primary btn-lg" type="submit">Send message</button>
+          <p class="form-hint">
+            We will reply from <code>{CONTACT_EMAIL}</code> within one business day.
+          </p>
+        </form>
+
+        <aside class="contact-side">
+          <div class="card">
+            <h3>Email</h3>
+            <p>
+              General: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a><br />
+              Support: <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a><br />
+              Data: <code>data@fairledger.io</code>
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Response times</h3>
+            <ul class="rt-list">
+              <li><span>Reader questions</span><span class="text-success">&lt; 1 business day</span></li>
+              <li><span>Data corrections</span><span class="text-success">&lt; 48 hours</span></li>
+              <li><span>Press</span><span class="text-success">Same day</span></li>
+              <li><span>Partnerships</span><span class="text-muted">2-3 business days</span></li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Find us elsewhere</h3>
+            <div class="social-grid">
+              <a class="social-tile" href={socialLinks.x} target="_blank" rel="noopener noreferrer">
+                <span>X</span><span class="social-handle">@FairLedger</span>
+              </a>
+              <a class="social-tile" href={socialLinks.discord} target="_blank" rel="noopener noreferrer">
+                <span>Discord</span><span class="social-handle">discord.gg/fairledger</span>
+              </a>
+              <a class="social-tile" href={socialLinks.telegram} target="_blank" rel="noopener noreferrer">
+                <span>Telegram</span><span class="social-handle">@fairledger</span>
+              </a>
+              <a class="social-tile" href={socialLinks.youtube} target="_blank" rel="noopener noreferrer">
+                <span>YouTube</span><span class="social-handle">@fairledger</span>
+              </a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  @media (min-width: 900px) {
+    .contact-grid {
+      grid-template-columns: 1.4fr 1fr;
+    }
+  }
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--color-border);
+    color: #fff;
+    padding: 11px 14px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    transition: border-color 0.15s ease;
+    resize: vertical;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background: rgba(124, 58, 237, 0.06);
+  }
+  .form-hint {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-align: center;
+  }
+  .form-hint code {
+    font-family: var(--font-mono);
+    color: #fff;
+  }
+
+  .contact-side {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .contact-side h3 {
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+  .contact-side p {
+    color: var(--color-text-soft);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .contact-side a {
+    color: var(--color-primary-soft);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .contact-side code {
+    font-family: var(--font-mono);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.92em;
+  }
+  .rt-list {
+    display: grid;
+    gap: 8px;
+  }
+  .rt-list li {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13.5px;
+    color: var(--color-text-soft);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--color-border-soft);
+  }
+  .rt-list li:last-child {
+    border-bottom: none;
+  }
+  .social-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .social-tile {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid var(--color-border-soft);
+    padding: 12px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    transition: all 0.15s ease;
+  }
+  .social-tile:hover {
+    border-color: var(--color-primary);
+    background: rgba(124, 58, 237, 0.08);
+  }
+  .social-tile span:first-child {
+    font-weight: 700;
+    color: #fff;
+    font-size: 13px;
+  }
+  .social-handle {
+    font-size: 11.5px;
+    color: var(--color-text-muted);
+  }
+</style>
