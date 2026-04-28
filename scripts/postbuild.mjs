@@ -59,6 +59,34 @@ async function appendPreviewHeaders() {
   console.log('postbuild: appended noindex X-Robots-Tag headers for preview build');
 }
 
+function normalizeBasePath(input) {
+  if (!input || input === '/') return '';
+  const withLeading = input.startsWith('/') ? input : `/${input}`;
+  return withLeading.endsWith('/') ? withLeading.slice(0, -1) : withLeading;
+}
+
+async function applyBasePathToRootUrls() {
+  const basePath = normalizeBasePath(process.env.SITE_BASE_PATH || '/test_website_gamble_1');
+  if (!basePath) return;
+
+  const htmlFiles = await walk(distDir, (p) => p.endsWith('.html'));
+  let updatedFiles = 0;
+
+  const rootAttrPattern = /((?:href|src|content)=["'])\/(?!\/|test_website_gamble_1\/)/g;
+
+  for (const file of htmlFiles) {
+    const original = await fs.readFile(file, 'utf8');
+    const updated = original.replace(rootAttrPattern, `$1${basePath}/`);
+    if (updated !== original) {
+      await fs.writeFile(file, updated, 'utf8');
+      updatedFiles += 1;
+    }
+  }
+
+  console.log(`postbuild: rebased root URLs with "${basePath}" in ${updatedFiles} HTML files`);
+}
+
 await injectModulePreloads();
+await applyBasePathToRootUrls();
 await appendPreviewHeaders();
 console.log('postbuild: done');
